@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>د. أحمد بسيوني | عيادة الحركة للعلاج الطبيعي</title>
+<meta name="description" content="مختبر تشريح تفاعلي ثلاثي الأبعاد للعضلات – عيادة الحركة للعلاج الطبيعي" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#060a11;
+    --bg-2:#0b1220;
+    --glass:rgba(13,20,34,.62);
+    --glass-2:rgba(20,30,48,.7);
+    --line:rgba(255,255,255,.08);
+    --line-2:rgba(255,255,255,.14);
+    --text:#e8eef7;
+    --muted:#8fa0b8;
+    --teal:#2fe0c8;
+    --teal-d:#18a897;
+    --red:#ff5a64;
+    --amber:#ffc75a;
+    --blue:#6aa8ff;
+    --radius:18px;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Sans Arabic', system-ui, sans-serif;
+    background:var(--bg); color:var(--text);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* ───────── Header ───────── */
+  .header{
+    position:fixed; inset:0 0 auto 0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    padding:14px clamp(16px,3vw,40px);
+    background:linear-gradient(to bottom, rgba(6,10,17,.85), rgba(6,10,17,.35));
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px}
+  .brand-mark{
+    width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+    background:radial-gradient(circle at 30% 30%, rgba(47,224,200,.35), rgba(47,224,200,.05));
+    border:1px solid rgba(47,224,200,.35);
+  }
+  .brand b{display:block;font-size:16px;font-weight:700;letter-spacing:-.2px}
+  .brand small{display:block;font-size:11.5px;color:var(--muted)}
+  .nav{display:flex;gap:4px;align-items:center}
+  .nav a{
+    position:relative; padding:9px 14px; border-radius:10px; font-size:14.5px; color:#c5d1e2;
+    transition:.2s;
+  }
+  .nav a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .nav a.active{color:#fff}
+  .nav a.active::after{
+    content:"";position:absolute;inset:auto 14px 3px 14px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,transparent,var(--teal),transparent);
+  }
+  .header-cta{display:flex;align-items:center;gap:10px}
+  .phone{font-family:var(--mono);font-size:13px;color:var(--muted);direction:ltr}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;
+    font-weight:600;font-size:14px;transition:.2s; white-space:nowrap;
+  }
+  .btn-primary{background:var(--teal);color:#04201c;box-shadow:0 8px 24px -8px rgba(47,224,200,.6)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 30px -8px rgba(47,224,200,.75)}
+  .btn-ghost{border:1px solid var(--line-2);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08)}
+  .burger{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line-2)}
+  .burger span{display:block;width:18px;height:2px;background:#fff;margin:4px auto;border-radius:2px}
+
+  /* ───────── Hero ───────── */
+  .hero{position:relative;height:100vh;min-height:760px;overflow:hidden;
+    background:
+      radial-gradient(900px 600px at 50% 55%, rgba(47,224,200,.08), transparent 60%),
+      radial-gradient(700px 500px at 20% 10%, rgba(255,90,100,.06), transparent 60%),
+      linear-gradient(180deg,#060a11,#08101c 60%,#060a11);
+  }
+  .hero::before{ /* blueprint grid */
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+  .stage{position:absolute;inset:0}
+  #gl{display:block;width:100%;height:100%;touch-action:none;outline:none}
+  .pins{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+
+  .hero-ui{
+    position:absolute; inset:92px clamp(16px,2vw,28px) 22px;
+    display:grid; grid-template-columns:340px 1fr 370px; grid-template-rows:auto 1fr auto;
+    gap:16px; pointer-events:none;
+  }
+  .card{
+    pointer-events:auto; background:var(--glass); border:1px solid var(--line);
+    border-radius:var(--radius); backdrop-filter:blur(18px) saturate(1.2); -webkit-backdrop-filter:blur(18px) saturate(1.2);
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.6);
+  }
+
+  /* intro */
+  .intro{grid-column:1;grid-row:1/3;align-self:start;padding:6px 4px;pointer-events:auto}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--teal);
+    padding:6px 12px;border-radius:999px;border:1px solid rgba(47,224,200,.3);background:rgba(47,224,200,.07);
+  }
+  .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(47,224,200,.6);animation:ping 2s infinite}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(47,224,200,.6)}80%,100%{box-shadow:0 0 0 10px rgba(47,224,200,0)}}
+  .intro h1{font-size:clamp(30px,3.1vw,46px);line-height:1.2;font-weight:700;margin:18px 0 14px;letter-spacing:-.5px}
+  .intro h1 em{font-style:normal;background:linear-gradient(90deg,var(--teal),#9ff5e8);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .intro p{color:var(--muted);line-height:1.85;font-size:15px;max-width:330px}
+  .intro .actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+  .hint{margin-top:26px;display:grid;gap:10px;font-size:13px;color:#b7c4d6}
+  .hint div{display:flex;align-items:center;gap:10px}
+  .hint kbd{
+    font-family:var(--mono);font-size:11px;min-width:30px;text-align:center;padding:4px 7px;border-radius:7px;
+    background:rgba(255,255,255,.06);border:1px solid var(--line-2);color:#dfe8f3;
+  }
+
+  /* layers */
+  .layers{grid-column:2;grid-row:1;justify-self:center;align-self:start;display:flex;flex-wrap:wrap;gap:6px;padding:6px;justify-content:center}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:10px;font-size:12.5px;color:#a9b8cc;
+    border:1px solid transparent;transition:.18s;
+  }
+  .chip .sw{width:9px;height:9px;border-radius:3px;background:currentColor;opacity:.35}
+  .chip.on{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line-2)}
+  .chip.on .sw{opacity:1}
+  .chip:hover{color:#fff}
+
+  /* readouts */
+  .readouts{grid-column:1;grid-row:3;align-self:end;padding:16px 18px}
+  .ro-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .ro-head span{font-size:12px;color:var(--muted)}
+  .phase{font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line-2);transition:.25s;white-space:nowrap}
+  .phase.con{color:#ffb0b5;border-color:rgba(255,90,100,.45);background:rgba(255,90,100,.1)}
+  .phase.ecc{color:#a9cbff;border-color:rgba(106,168,255,.45);background:rgba(106,168,255,.1)}
+  .phase.iso{color:#ffe0a0;border-color:rgba(255,199,90,.45);background:rgba(255,199,90,.1)}
+  .gauge-row{display:flex;align-items:center;gap:16px}
+  .gauge{position:relative;width:118px;height:70px;flex:none}
+  .gauge svg{width:100%;height:100%;overflow:visible}
+  .gauge .val{position:absolute;inset:auto 0 0 0;text-align:center;font-family:var(--mono);font-size:24px;font-weight:600;line-height:1}
+  .gauge .val small{font-size:11px;color:var(--muted);font-family:'IBM Plex Sans Arabic',sans-serif;font-weight:400}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;flex:1}
+  .metric span{display:block;font-size:11px;color:var(--muted)}
+  .metric b{font-family:var(--mono);font-size:15px;font-weight:600}
+  .metric b small{font-size:10.5px;color:var(--muted);font-weight:400}
+  .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.07);margin-top:12px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#ff8a6a,var(--red));transition:width .12s linear}
+  .bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+
+  /* dock */
+  .dock{grid-column:2;grid-row:3;justify-self:center;align-self:end;padding:12px 14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;max-width:720px}
+  .slider{display:flex;align-items:center;gap:10px;min-width:250px}
+  .slider label{font-size:12.5px;color:var(--muted);white-space:nowrap}
+  .slider output{font-family:var(--mono);font-size:13px;min-width:38px;text-align:center}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:170px;height:6px;border-radius:6px;cursor:pointer;
+    background:linear-gradient(90deg,var(--teal) var(--p,30%),rgba(255,255,255,.1) var(--p,30%));
+  }
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid var(--teal);box-shadow:0 0 0 4px rgba(47,224,200,.18)}
+  input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:4px solid var(--teal)}
+  .seg{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:11px;padding:3px}
+  .seg button{padding:6px 10px;font-size:12.5px;border-radius:8px;color:#a9b8cc;transition:.18s}
+  .seg button.on{background:rgba(47,224,200,.16);color:#bff8ef}
+  .icon-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:11px;font-size:12.5px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);transition:.18s}
+  .icon-btn:hover{background:rgba(255,255,255,.08)}
+  .icon-btn.on{border-color:rgba(47,224,200,.5);color:#bff8ef;background:rgba(47,224,200,.1)}
+  .divider{width:1px;height:26px;background:var(--line-2)}
+
+  /* panel */
+  .panel{grid-column:3;grid-row:1/4;display:flex;flex-direction:column;overflow:hidden;min-height:0}
+  .panel-top{padding:16px 18px 0}
+  .m-tabs{display:flex;gap:6px;margin-bottom:14px}
+  .m-tabs button{flex:1;padding:8px 6px;font-size:12px;border-radius:10px;border:1px solid var(--line);color:#a9b8cc;transition:.18s;display:flex;align-items:center;justify-content:center;gap:6px}
+  .m-tabs button i{width:8px;height:8px;border-radius:50%}
+  .m-tabs button.on{color:#fff;border-color:var(--line-2);background:rgba(255,255,255,.06)}
+  .m-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .m-title h2{font-size:19px;font-weight:700;line-height:1.4}
+  .m-title .latin{font-family:var(--mono);font-size:12px;color:var(--teal);direction:ltr;text-align:right;margin-top:2px}
+  .focus-btn{font-size:11.5px;padding:6px 10px;border-radius:9px;border:1px solid var(--line-2);color:#c9d6e6;white-space:nowrap}
+  .focus-btn.on{border-color:rgba(47,224,200,.5);color:#bff8ef}
+  .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 4px}
+  .quick div{padding:9px 10px;border-radius:11px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+  .quick span{display:block;font-size:10.5px;color:var(--muted)}
+  .quick b{font-size:12.5px;font-weight:600}
+  .i-tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-top:12px}
+  .i-tabs button{padding:10px 10px;font-size:13px;color:var(--muted);position:relative}
+  .i-tabs button.on{color:#fff}
+  .i-tabs button.on::after{content:"";position:absolute;inset:auto 8px -1px 8px;height:2px;background:var(--teal);border-radius:2px}
+  .panel-body{flex:1;overflow:auto;padding:14px 18px;min-height:0;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+  .row{padding:11px 0;border-bottom:1px dashed var(--line)}
+  .row:last-child{border:0}
+  .row h4{font-size:12.5px;color:var(--teal);font-weight:600;margin-bottom:4px}
+  .row p{font-size:13.5px;line-height:1.75;color:#d3dceb}
+  .row .ex{margin-top:8px}
+  .panel-body .fade{animation:fadeUp .35s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .emg{border-top:1px solid var(--line);padding:12px 18px 14px}
+  .emg-head{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--muted);margin-bottom:6px}
+  .emg-head .lg{display:flex;gap:12px}
+  .emg-head .lg span{display:flex;align-items:center;gap:5px}
+  .emg-head .lg i{width:10px;height:3px;border-radius:2px}
+  #emg{width:100%;height:64px;display:block}
+
+  /* pins */
+  .pin{position:absolute;left:0;top:0;pointer-events:auto;transform:translate3d(-100px,-100px,0);transition:opacity .25s}
+  .pin .dot{
+    position:absolute;left:-13px;top:-13px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--mono);font-size:11.5px;font-weight:600;color:#04201c;background:var(--teal);
+    box-shadow:0 0 0 4px rgba(47,224,200,.2),0 4px 14px rgba(0,0,0,.5);cursor:pointer;transition:transform .2s;
+  }
+  .pin .dot::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(47,224,200,.6);animation:ring 2.4s infinite}
+  @keyframes ring{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.9);opacity:0}}
+  .pin:hover .dot,.pin.open .dot{transform:scale(1.12)}
+  .pin.nerve .dot{background:var(--amber);box-shadow:0 0 0 4px rgba(255,199,90,.2)}
+  .pin.nerve .dot::before{border-color:rgba(255,199,90,.6)}
+  .pin .tip{
+    position:absolute;top:-14px;right:22px;width:240px;padding:12px 14px;border-radius:14px;
+    background:rgba(10,16,28,.92);border:1px solid var(--line-2);backdrop-filter:blur(10px);
+    opacity:0;transform:translateX(6px);pointer-events:none;transition:.2s;z-index:3;
+  }
+  .pin.flip .tip{right:auto;left:22px;transform:translateX(-6px)}
+  .pin.open .tip{opacity:1;transform:none;pointer-events:auto}
+  .pin .tip b{display:block;font-size:13.5px}
+  .pin .tip i{display:block;font-style:normal;font-family:var(--mono);font-size:11px;color:var(--teal);direction:ltr;text-align:right;margin:2px 0 6px}
+  .pin .tip p{font-size:12.5px;line-height:1.7;color:#c5d1e2}
+  .pins.hidden .pin{opacity:0;pointer-events:none}
+  .pin.off{opacity:0;pointer-events:none}
+
+  .hover-tag{
+    position:absolute;left:0;top:0;pointer-events:none;padding:6px 10px;border-radius:9px;font-size:12px;
+    background:rgba(10,16,28,.9);border:1px solid var(--line-2);opacity:0;transition:opacity .15s;white-space:nowrap;z-index:4;
+  }
+  .hover-tag small{color:var(--muted)}
+  .drag-hint{
+    position:absolute;left:0;top:0;pointer-events:none;font-size:11.5px;color:#bff8ef;padding:5px 10px;border-radius:999px;
+    background:rgba(47,224,200,.12);border:1px solid rgba(47,224,200,.4);white-space:nowrap;transition:opacity .4s;
+  }
+
+  .loader{position:absolute;inset:0;display:grid;place-items:center;z-index:5;background:var(--bg);transition:opacity .6s, visibility .6s}
+  .loader.done{opacity:0;visibility:hidden}
+  .loader div{display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--muted);font-size:13px}
+  .loader svg{animation:spin 1.2s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ───────── Sections ───────── */
+  .section{padding:90px clamp(16px,4vw,64px);max-width:1280px;margin:0 auto}
+  .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+  .section-head h3{font-size:clamp(24px,2.4vw,34px);font-weight:700}
+  .section-head p{color:var(--muted);max-width:460px;line-height:1.8}
+  .services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .svc{padding:24px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);transition:.25s}
+  .svc:hover{border-color:rgba(47,224,200,.35);transform:translateY(-4px)}
+  .svc .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(47,224,200,.1);border:1px solid rgba(47,224,200,.25);margin-bottom:18px}
+  .svc h5{font-size:17px;margin-bottom:8px}
+  .svc p{color:var(--muted);font-size:14px;line-height:1.8}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .stat{padding:22px;border-radius:var(--radius);border:1px solid var(--line);text-align:center}
+  .stat b{display:block;font-family:var(--mono);font-size:30px;color:var(--teal)}
+  .stat span{color:var(--muted);font-size:13.5px}
+  footer{border-top:1px solid var(--line);padding:28px clamp(16px,4vw,64px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:13.5px}
+  footer nav{display:flex;gap:18px;flex-wrap:wrap}
+  footer a:hover{color:#fff}
+
+  /* ───────── Responsive ───────── */
+  @media (max-height:980px) and (min-width:1181px){ .hint{display:none} }
+  @media (max-width:1180px){
+    .nav,.phone{display:none}
+    .burger{display:block}
+    .nav.open{display:flex;position:absolute;top:100%;inset-inline:0;flex-direction:column;align-items:stretch;padding:12px 16px;background:rgba(6,10,17,.96);border-bottom:1px solid var(--line)}
+    .hero{height:auto;min-height:0;display:flex;flex-direction:column;padding-top:84px}
+    .hero-ui{display:contents}
+    .intro{order:1;padding:16px 16px 8px}
+    .intro p{max-width:none}
+    .hint{display:none}
+    .layers{order:2;margin:8px 16px 0;justify-content:flex-start}
+    .stage{order:3;position:relative;height:66vh;min-height:440px}
+    .dock{order:4;margin:0 16px}
+    .readouts{order:5;margin:16px 16px 0}
+    .panel{order:6;margin:16px;max-height:none}
+    .panel-body{overflow:visible}
+    .services,.stats{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:560px){
+    .services,.stats{grid-template-columns:1fr}
+    .hero{overflow-x:hidden}
+    .hero-ui > *{min-width:0}
+    .gauge-row{flex-wrap:wrap;justify-content:center}
+    .dock .divider{display:none}
+    .m-tabs button{font-size:11px;padding:8px 4px}
+    .quick{grid-template-columns:1fr 1fr 1fr;gap:6px}
+    .header-cta .btn{padding:9px 12px}
+    input[type=range]{width:130px}
+    .slider{min-width:0}
+    .pin .tip{width:200px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<!-- ═════════════ HEADER ═════════════ -->
+<header class="header">
+  <a href="#" class="brand">
+    <span class="brand-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="1.8" stroke-linecap="round"><path d="M4 14c3-1 4-5 7-5s3 3 5 3 3-2 4-3"/><path d="M4 19c3-1 4-4 7-4s3 2 5 2 3-1 4-2" opacity=".5"/><circle cx="12" cy="5" r="2"/></svg>
+    </span>
+    <span><b>د. أحمد بسيوني</b><small>استشاري العلاج الطبيعي والتأهيل الرياضي</small></span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="#" class="active">الرئيسية</a>
+    <a href="#services">الخدمات</a>
+    <a href="#">عن الدكتور</a>
+    <a href="#">الحالات والنتائج</a>
+    <a href="#">مكتبة التمارين</a>
+    <a href="#">المقالات</a>
+    <a href="#contact">تواصل معنا</a>
+  </nav>
+  <div class="header-cta">
+    <span class="phone">+20 100 000 0000</span>
+    <a href="#" class="btn btn-primary">احجز جلسة</a>
+    <button class="burger" id="burger" aria-label="القائمة"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ═════════════ HERO ═════════════ -->
+<section class="hero">
+  <div class="stage" id="stage">
+    <canvas id="gl" tabindex="0" aria-label="نموذج ثلاثي الأبعاد لعضلات العضد"></canvas>
+    <div class="pins" id="pins"></div>
+    <div class="hover-tag" id="hoverTag"></div>
+    <div class="drag-hint" id="dragHint">⇅ اسحب الدمبل لثني المرفق</div>
+    <div class="loader" id="loader"><div>
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+      جاري تحضير النموذج التشريحي…
+    </div></div>
+  </div>
+
+  <div class="hero-ui">
+    <!-- intro -->
+    <div class="intro">
+      <span class="eyebrow"><i></i> مختبر التشريح التفاعلي</span>
+      <h1>افهم عضلتك <em>قبل</em> أن تعالجها</h1>
+      <p>نموذج ثلاثي الأبعاد لعضلات العضد. اسحب الساعد لترى كيف تنقبض العضلة ذات الرأسين وتستطيل ثلاثية الرؤوس، وكيف يتغير الحمل عليهما، مع شرح التشريح والإصابات وبروتوكول التأهيل.</p>
+      <div class="actions">
+        <a href="#" class="btn btn-primary">احجز تقييمًا حركيًا</a>
+        <a href="#services" class="btn btn-ghost">خدماتنا</a>
+      </div>
+      <div class="hint">
+        <div><kbd>سحب</kbd> اسحب الدمبل لثني وفرد المرفق</div>
+        <div><kbd>نقر</kbd> اضغط على أي عضلة لعرض تفاصيلها</div>
+        <div><kbd>↑ ↓</kbd> تحكم دقيق بزاوية المرفق</div>
+        <div><kbd>عجلة</kbd> تكبير ودوران حول النموذج</div>
+      </div>
+    </div>
+
+    <!-- layers -->
+    <div class="layers card" id="layers">
+      <button class="chip on" data-layer="bones" style="color:#efe6d6"><span class="sw"></span>العظام</button>
+      <button class="chip on" data-layer="biceps" style="color:#ff6b6b"><span class="sw"></span>ذات الرأسين</button>
+      <button class="chip on" data-layer="brachialis" style="color:#d9585e"><span class="sw"></span>العضدية</button>
+      <button class="chip on" data-layer="triceps" style="color:#ff8fa3"><span class="sw"></span>ثلاثية الرؤوس</button>
+      <button class="chip on" data-layer="nerve" style="color:#ffc75a"><span class="sw"></span>العصب</button>
+      <button class="chip on" data-layer="pins" style="color:#2fe0c8"><span class="sw"></span>المعالم</button>
+      <button class="chip" data-layer="xray" style="color:#6aa8ff"><span class="sw"></span>أشعة</button>
+    </div>
+
+    <!-- readouts -->
+    <div class="readouts card">
+      <div class="ro-head"><span>القياسات الحيوية الميكانيكية</span><span class="phase iso" id="phase">ثابت</span></div>
+      <div class="gauge-row">
+        <div class="gauge">
+          <svg viewBox="0 0 120 70">
+            <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8" stroke-linecap="round"/>
+            <path id="gArc" d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="url(#gg)" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
+            <defs><linearGradient id="gg" x1="1" x2="0"><stop offset="0" stop-color="#2fe0c8"/><stop offset="1" stop-color="#ff5a64"/></linearGradient></defs>
+          </svg>
+          <div class="val"><span id="angle">0</span>°<br><small>ثني المرفق</small></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>عزم الجاذبية</span><b id="torque">0.0 <small>N·m</small></b></div>
+          <div class="metric"><span>قوة القابضات</span><b id="force">0 <small>N</small></b></div>
+          <div class="metric"><span>طول ذات الرأسين</span><b id="len">100 <small>%</small></b></div>
+          <div class="metric"><span>المدى الطبيعي</span><b>0–145 <small>°</small></b></div>
+        </div>
+      </div>
+      <div class="bar"><i id="actBar"></i></div>
+      <div class="bar-label"><span>تنشيط ذات الرأسين (تقديري)</span><span id="actVal" style="font-family:var(--mono)">0%</span></div>
+    </div>
+
+    <!-- dock -->
+    <div class="dock card">
+      <div class="slider">
+        <label for="flex">ثني المرفق</label>
+        <input type="range" id="flex" min="0" max="140" value="20" dir="ltr" />
+        <output id="flexOut">20°</output>
+      </div>
+      <span class="divider"></span>
+      <div class="seg" id="load" title="الوزن في اليد">
+        <button data-kg="0">بدون</button>
+        <button data-kg="2">2 كجم</button>
+        <button data-kg="5" class="on">5 كجم</button>
+        <button data-kg="10">10 كجم</button>
+      </div>
+      <span class="divider"></span>
+      <button class="icon-btn on" id="playBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l11-7z"/></svg>
+        <span>تمرين تلقائي</span>
+      </button>
+      <button class="icon-btn" id="rotBtn" title="دوران تلقائي">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        <span>دوران</span>
+      </button>
+    </div>
+
+    <!-- info panel -->
+    <aside class="panel card">
+      <div class="panel-top">
+        <div class="m-tabs" id="mTabs">
+          <button data-m="biceps" class="on"><i style="background:#ff6b6b"></i>ذات الرأسين</button>
+          <button data-m="brachialis"><i style="background:#d9585e"></i>العضدية</button>
+          <button data-m="triceps"><i style="background:#ff8fa3"></i>ثلاثية الرؤوس</button>
+        </div>
+        <div class="m-title">
+          <div><h2 id="mName"></h2><div class="latin" id="mLatin"></div></div>
+          <button class="focus-btn" id="focusBtn">عزل العضلة</button>
+        </div>
+        <div class="quick" id="mQuick"></div>
+        <div class="i-tabs" id="iTabs">
+          <button data-t="anatomy" class="on">التشريح</button>
+          <button data-t="function">الوظيفة</button>
+          <button data-t="injuries">الإصابات</button>
+          <button data-t="rehab">التأهيل</button>
+        </div>
+      </div>
+      <div class="panel-body" id="mBody"></div>
+      <div class="emg">
+        <div class="emg-head">
+          <span>محاكاة EMG سطحي</span>
+          <span class="lg"><span><i style="background:#ff5a64"></i>ذات الرأسين</span><span><i style="background:#6aa8ff"></i>ثلاثية الرؤوس</span></span>
+        </div>
+        <canvas id="emg"></canvas>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ═════════════ SERVICES ═════════════ -->
+<section class="section" id="services">
+  <div class="section-head">
+    <h3>برامج علاج مبنية على فهم الحركة</h3>
+    <p>كل خطة علاج تبدأ بتقييم حركي دقيق للعضلات والمفاصل، ثم برنامج تأهيل متدرج يناسب حالتك وهدفك.</p>
+  </div>
+  <div class="services">
+    <div class="svc"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="1.8" stroke-linecap="round"><path d="M6 4v16M18 4v16M3 8h6M15 8h6M3 16h6M15 16h6M9 12h6"/></svg></div><h5>التأهيل الرياضي</h5><p>عودة آمنة للملاعب بعد التمزقات العضلية وإصابات الأوتار والأربطة.</p></div>
+    <div class="svc"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M5 8c2 2 5 2 7 0s5-2 7 0M5 16c2-2 5-2 7 0s5 2 7 0"/></svg></div><h5>آلام العمود الفقري</h5><p>علاج الانزلاق الغضروفي وآلام الرقبة والظهر بالعلاج اليدوي والتمارين.</p></div>
+    <div class="svc"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h5>ما بعد العمليات</h5><p>برامج تأهيل بعد الرباط الصليبي، الكتف، والمفاصل الصناعية.</p></div>
+    <div class="svc"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2fe0c8" stroke-width="1.8" stroke-linecap="round"><path d="M4 20l6-6M14 10l6-6M9 4h11v11"/></svg></div><h5>العلاج بالموجات التصادمية</h5><p>لالتهابات الأوتار المزمنة ومهماز الكعب وكوع لاعب التنس.</p></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>+12</b><span>سنة خبرة</span></div>
+    <div class="stat"><b>+4,800</b><span>حالة تم تأهيلها</span></div>
+    <div class="stat"><b>96%</b><span>رضا المرضى</span></div>
+    <div class="stat"><b>3</b><span>فروع</span></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <span>© 2026 عيادة الحركة – د. أحمد بسيوني. محتوى تعليمي ولا يغني عن التشخيص الطبي.</span>
+  <nav><a href="#">سياسة الخصوصية</a><a href="#">الأسئلة الشائعة</a><a href="#">الفروع</a><a href="#">واتساب</a></nav>
+</footer>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ════════════════════════ Data ════════════════════════ */
+const MUSCLES = {
+  biceps: {
+    name: 'العضلة ذات الرأسين العضدية', latin: 'Biceps brachii',
+    quick: [['النوع','مغزلية'],['التعصيب','C5–C6'],['المفاصل','الكتف + المرفق']],
+    anatomy: [
+      ['المنشأ – الرأس الطويل','الحديبة فوق الحُقّانية للوح الكتف (Supraglenoid tubercle). يمر الوتر داخل محفظة مفصل الكتف ثم في الأخدود بين الحديبتين.'],
+      ['المنشأ – الرأس القصير','قمة النتوء الغرابي للوح الكتف (Coracoid process) بالاشتراك مع العضلة الغرابية العضدية.'],
+      ['المُدغَم','حدبة الكعبرة (Radial tuberosity)، والسفاق ذو الرأسين (Bicipital aponeurosis) الذي يندمج في اللفافة العميقة للساعد.'],
+      ['التعصيب','العصب العضلي الجلدي (Musculocutaneous nerve) – الجذور C5–C6.'],
+      ['التروية الدموية','فروع عضلية من الشريان العضدي (Brachial artery).'],
+      ['ملاحظة إكلينيكية','منعكس وتر ذات الرأسين يختبر سلامة الجذر C5–C6.'],
+    ],
+    function: [
+      ['ثني المرفق','قابض قوي للمرفق، ويكون أكثر كفاءة والساعد في وضع الاستلقاء (Supination).'],
+      ['استلقاء الساعد','أقوى مُستلقٍ للساعد، وتبلغ كفاءته القصوى عند ثني المرفق 90°.'],
+      ['مفصل الكتف','الرأس الطويل يساعد في ثني الكتف ويُسهم في تثبيت رأس العضد داخل الحُقّ.'],
+      ['ذراع العزم','أقصى ذراع عزم للعضلة عند زاوية 80–100° من ثني المرفق، لذلك تكون هذه أصعب نقطة في تمرين الثني بالدمبل.'],
+    ],
+    injuries: [
+      ['اعتلال وتر الرأس الطويل','ألم أمام الكتف يزداد مع الرفع فوق الرأس. اختبارات: Speed’s test و Yergason’s test.'],
+      ['تمزق الوتر القريب','غالبًا بعد سن الأربعين، ويظهر بانتفاخ في أسفل العضد يُعرف بعلامة Popeye.'],
+      ['تمزق الوتر البعيد','ألم مفاجئ عند المرفق مع رفع حمل ثقيل وضعف في الاستلقاء. اختبار Hook test، ويحتاج غالبًا تدخلًا جراحيًا مبكرًا.'],
+      ['الشد العضلي','تمزق في ألياف البطن العضلي بدرجات 1–3، عادةً أثناء الانقباض اللامركزي.'],
+    ],
+    rehab: [
+      ['المرحلة 1 – الحماية (0–2 أسبوع)','تقليل الألم والتورم، وحركة سلبية ثم نشطة بمساعدة، وانقباضات ثابتة تحت حد الألم.', 'iso', 'جرّب: ثبات عند 90°'],
+      ['المرحلة 2 – التحميل (2–6 أسابيع)','تمارين لا مركزية بطيئة (3 ثوانٍ نزول) بأوزان خفيفة، 3 مجموعات × 15 تكرارًا.', 'ecc', 'جرّب: نزول لا مركزي'],
+      ['المرحلة 3 – القوة والعودة','ثني كامل المدى بمقاومة متدرجة، ثم تمارين وظيفية ورياضية.', 'curl', 'جرّب: ثني كامل المدى'],
+    ],
+  },
+  brachialis: {
+    name: 'العضلة العضدية', latin: 'Brachialis',
+    quick: [['النوع','عريضة مسطحة'],['التعصيب','C5–C6 (+C7)'],['المفاصل','المرفق فقط']],
+    anatomy: [
+      ['المنشأ','النصف السفلي للسطح الأمامي لعظم العضد، والحاجزان العضليان بين العضلات.'],
+      ['المُدغَم','حدبة الزند (Ulnar tuberosity) والنتوء المنقاري (Coronoid process).'],
+      ['التعصيب','العصب العضلي الجلدي (C5–C6)، والجزء الوحشي يتلقى فرعًا من العصب الكعبري (C7).'],
+      ['التروية الدموية','الشريان العضدي والشريان الراجع الكعبري.'],
+      ['العلاقة التشريحية','تقع عميقًا تحت ذات الرأسين، وتشكل أرضية الحفرة المرفقية (Cubital fossa).'],
+    ],
+    function: [
+      ['ثني المرفق','القابض الأساسي للمرفق، وتعمل بكفاءة في كل أوضاع الساعد لأنها تُدغم في الزند الذي لا يدور.'],
+      ['حماية المفصل','تدعم الجزء الأمامي لمحفظة المرفق.'],
+      ['الأهمية','تُلقّب بـ «حصان العمل» لأنها تنشط في كل حركة ثني تقريبًا.'],
+    ],
+    injuries: [
+      ['مرفق المتسلقين','إجهاد مزمن في وتر العضدية عند متسلقي الصخور ومن يرفعون أحمالًا وقبضتهم في وضع الكب.'],
+      ['التهاب العضل المتعظم','تكلس داخل العضلة (Myositis ossificans) بعد كسر أو خلع المرفق أو تدليك عنيف مبكر.'],
+      ['الشد العضلي','ألم عميق أمام المرفق مع الثني ضد مقاومة والساعد في وضع الكب.'],
+    ],
+    rehab: [
+      ['التحكم في الألم','راحة نسبية وتجنب التدليك العنيف بعد إصابات المرفق الحادة.', 'iso', 'جرّب: ثبات عند 90°'],
+      ['التقوية الموجهة','تمرين Hammer curl وReverse curl لعزل العضدية عن ذات الرأسين.', 'curl', 'جرّب: ثني كامل المدى'],
+      ['التحميل اللامركزي','نزول بطيء بأوزان متدرجة لإعادة بناء قدرة الوتر على التحمل.', 'ecc', 'جرّب: نزول لا مركزي'],
+    ],
+  },
+  triceps: {
+    name: 'العضلة ثلاثية الرؤوس العضدية', latin: 'Triceps brachii',
+    quick: [['النوع','ريشية متعددة'],['التعصيب','C6–C8'],['المفاصل','الكتف + المرفق']],
+    anatomy: [
+      ['المنشأ – الرأس الطويل','الحديبة تحت الحُقّانية للوح الكتف (Infraglenoid tubercle).'],
+      ['المنشأ – الرأس الوحشي','السطح الخلفي للعضد أعلى أخدود العصب الكعبري.'],
+      ['المنشأ – الرأس الإنسي','السطح الخلفي للعضد أسفل أخدود العصب الكعبري.'],
+      ['المُدغَم','السطح العلوي للزُّج أو النتوء المرفقي (Olecranon) عبر وتر مشترك.'],
+      ['التعصيب','العصب الكعبري (Radial nerve) – الجذور C6–C8، والرأس الطويل قد يتلقى فرعًا من العصب الإبطي.'],
+      ['التروية الدموية','الشريان العضدي العميق (Profunda brachii).'],
+    ],
+    function: [
+      ['بسط المرفق','الباسط الرئيسي للمرفق، ويعمل الرأس الإنسي في معظم الحركات الخفيفة.'],
+      ['مفصل الكتف','الرأس الطويل يبسط الكتف ويقربه، ويثبت رأس العضد عند حمل الأوزان.'],
+      ['أثناء ثني المرفق','تستطيل العضلة وتتحكم في سرعة الحركة، وهذا هو النشاط المشترك (Co-contraction).'],
+    ],
+    injuries: [
+      ['اعتلال وتر ثلاثية الرؤوس','ألم خلف المرفق عند رافعي الأثقال ولاعبي الرمي، ويزداد مع الدفع.'],
+      ['تمزق الوتر','نادر، ويحدث مع السقوط على يد ممدودة، ويصاحبه فقدان البسط الفعال.'],
+      ['الثلاثية المنزلقة','انزلاق الرأس الإنسي فوق اللقيمة الإنسية (Snapping triceps)، وقد يهيّج العصب الزندي.'],
+    ],
+    rehab: [
+      ['الحماية','انقباضات ثابتة للبسط، وحماية من الثني الكامل المبكر بعد الإصلاح الجراحي.', 'iso', 'جرّب: ثبات عند 90°'],
+      ['التقوية','Triceps pushdown وتمارين الضغط المعدّلة بمدى متدرج.', 'curl', 'شاهد الاستطالة'],
+      ['التحميل اللامركزي','Overhead extension بنزول بطيء لتحسين قدرة الوتر على التحمل.', 'ecc', 'جرّب: نزول لا مركزي'],
+    ],
+  },
+};
+
+/* ════════════════════════ Renderer / scene ════════════════════════ */
+const stage = document.getElementById('stage');
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.fog = new THREE.Fog(0x060a11, 14, 26);
+
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+camera.position.set(10.4, 1.4, 12.6);
+
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0, -0.15, 0.6);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.enablePan = false;
+controls.minDistance = 4;
+controls.maxDistance = 16;
+controls.autoRotateSpeed = 1.1;
+
+scene.add(new THREE.HemisphereLight(0xcfe9ff, 0x1a0f14, 0.55));
+const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(4, 6, 6); scene.add(key);
+const rim = new THREE.DirectionalLight(0x2fe0c8, 2.6); rim.position.set(-6, 2, -5); scene.add(rim);
+const warm = new THREE.PointLight(0xff7a8a, 14, 12); warm.position.set(2.5, -1.5, 3); scene.add(warm);
+
+const rig = new THREE.Group();
+scene.add(rig);
+
+/* ════════════════════════ Textures ════════════════════════ */
+function fiberTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const g = c.getContext('2d');
+  g.fillStyle = '#d6d6d6'; g.fillRect(0, 0, 512, 512);
+  for (let i = 0; i < 1100; i++) {
+    const x = Math.random() * 512, w = .6 + Math.random() * 2.4, l = 160 + Math.random() * 420, y = Math.random() * 512;
+    const s = 150 + Math.random() * 105 | 0;
+    g.fillStyle = `rgba(${s},${s},${s},${.25 + Math.random() * .5})`;
+    for (const dx of [0, 512, -512]) for (const dy of [0, 512, -512]) g.fillRect(x + dx, y - l / 2 + dy, w, l);
+  }
+  for (let i = 0; i < 80; i++) { g.fillStyle = 'rgba(40,40,40,.35)'; g.fillRect(Math.random() * 512, 0, 1, 512); }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(4, 1);
+  t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return t;
+}
+const FIBER = fiberTexture();
+
+function glowTexture(inner, outer) {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d'); const gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  gr.addColorStop(0, inner); gr.addColorStop(1, outer);
+  g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+/* ════════════════════════ Muscle geometry ════════════════════════ */
+const RAD = 56, SEG = 150;
+const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+
+// Fusiform radius profile: thin tendon → belly → thin tendon
+function fusiform({ a, b, belly, tendonR, peak = .5, bulge = .4 }) {
+  const k = Math.log(.5) / Math.log(peak);
+  return (t, act) => {
+    const u = (t - a) / (1 - a - b);
+    let m = 0;
+    if (u > 0 && u < 1) m = Math.pow(Math.sin(Math.PI * Math.pow(u, k)), .75);
+    const r = tendonR + (belly * (1 + bulge * act) - tendonR) * m;
+    return { r, tendon: 1 - ss(.04, .5, m) };
+  };
+}
+
+class Muscle {
+  constructor({ key, color, tendon = '#efe4d2', profile, wx = 1, wz = 1 }) {
+    Object.assign(this, { key, profile, wx, wz });
+    this.cM = new THREE.Color(color); this.cT = new THREE.Color(tendon);
+    const nV = (SEG + 1) * (RAD + 1);
+    this.pos = new Float32Array(nV * 3);
+    this.col = new Float32Array(nV * 3);
+    const uv = new Float32Array(nV * 2), idx = [];
+    for (let i = 0; i <= SEG; i++) for (let j = 0; j <= RAD; j++) {
+      const k = i * (RAD + 1) + j; uv[k * 2] = j / RAD; uv[k * 2 + 1] = i / SEG;
+    }
+    for (let i = 0; i < SEG; i++) for (let j = 0; j < RAD; j++) {
+      const a = i * (RAD + 1) + j, b = a + RAD + 1; idx.push(a, b, a + 1, b, b + 1, a + 1);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(this.pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(this.col, 3));
+    g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    g.setIndex(idx);
+    this.mat = new THREE.MeshPhysicalMaterial({
+      vertexColors: true, map: FIBER, bumpMap: FIBER, bumpScale: 1.1,
+      roughness: .46, clearcoat: .6, clearcoatRoughness: .38,
+      sheen: .7, sheenRoughness: .45, sheenColor: new THREE.Color('#ff9fa5'),
+      emissive: new THREE.Color('#ff2a2a'), emissiveIntensity: 0, transparent: true,
+    });
+    this.mesh = new THREE.Mesh(g, this.mat);
+    this.mesh.userData.key = key;
+    this.opacity = 1;
+    rig.add(this.mesh);
+  }
+  update(points, act) {
+    const curve = new THREE.CatmullRomCurve3(points, false, 'centripetal');
+    const P = new THREE.Vector3(), T = new THREE.Vector3(), N = new THREE.Vector3(), B = new THREE.Vector3();
+    const ref = new THREE.Vector3(1, 0, 0), tmp = new THREE.Color();
+    const pos = this.pos, col = this.col;
+    for (let i = 0; i <= SEG; i++) {
+      const t = i / SEG;
+      curve.getPointAt(t, P); curve.getTangentAt(t, T);
+      N.crossVectors(ref, T).normalize(); B.crossVectors(T, N).normalize();
+      let { r, tendon } = this.profile(t, act);
+      const e = Math.min(t, 1 - t); if (e < .025) r *= Math.sqrt(e / .025);
+      tmp.copy(this.cM).lerp(this.cT, tendon);
+      const shade = .82 + .18 * Math.sin(t * Math.PI);
+      for (let j = 0; j <= RAD; j++) {
+        const a = (j / RAD) * Math.PI * 2, ca = Math.cos(a), sa = Math.sin(a);
+        const w = 1 + (1 - tendon) * (.028 * Math.sin(a * 5 + t * 17) + .016 * Math.sin(a * 11 - t * 31));
+        const k = (i * (RAD + 1) + j) * 3;
+        const rx = r * this.wx * w, rz = r * this.wz * w;
+        pos[k]     = P.x + B.x * ca * rx + N.x * sa * rz;
+        pos[k + 1] = P.y + B.y * ca * rx + N.y * sa * rz;
+        pos[k + 2] = P.z + B.z * ca * rx + N.z * sa * rz;
+        col[k] = tmp.r * shade; col[k + 1] = tmp.g * shade; col[k + 2] = tmp.b * shade;
+      }
+    }
+    const g = this.mesh.geometry;
+    g.attributes.position.needsUpdate = true;
+    g.attributes.color.needsUpdate = true;
+    g.computeVertexNormals();
+    // weld seam normals
+    const n = g.attributes.normal.array;
+    for (let i = 0; i <= SEG; i++) {
+      const a = i * (RAD + 1) * 3, b = (i * (RAD + 1) + RAD) * 3;
+      for (let c = 0; c < 3; c++) { const v = (n[a + c] + n[b + c]) / 2; n[a + c] = n[b + c] = v; }
+    }
+    g.computeBoundingSphere();
+    this.length = curve.getLength();
+    this.curve = curve;
+  }
+}
+
+/* ════════════════════════ Bones ════════════════════════ */
+const boneMat = new THREE.MeshPhysicalMaterial({ color: '#ece4d1', roughness: .55, clearcoat: .35, clearcoatRoughness: .5, sheen: .3, sheenColor: new THREE.Color('#fff4dc'), emissive: new THREE.Color('#2fe0c8'), emissiveIntensity: 0, transparent: true });
+const bones = new THREE.Group(); rig.add(bones);
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const ELBOW = V(0, -0.6, 0);
+
+function boneBetween(a, b, r1, r2, mat = boneMat, parent = bones) {
+  const dir = new THREE.Vector3().subVectors(b, a); const len = dir.length();
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, len, 28, 1), mat);
+  m.position.copy(a).addScaledVector(dir, .5);
+  m.quaternion.setFromUnitVectors(V(0, 1, 0), dir.normalize());
+  parent.add(m); return m;
+}
+function blob(p, r, s = [1, 1, 1], parent = bones, mat = boneMat) {
+  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 36, 24), mat);
+  m.position.copy(p); m.scale.set(...s); parent.add(m); return m;
+}
+// humerus
+boneBetween(V(0.02, 2.0, -0.05), V(0, -0.45, 0), .14, .13);
+boneBetween(V(0, 1.2, -0.04), V(0, 0.2, -0.02), .125, .115);
+blob(V(-0.04, 2.2, -0.08), .31);                      // head
+blob(V(0.17, 2.24, 0.06), .15);                        // greater tubercle
+blob(V(-0.05, 2.18, 0.14), .1);                        // lesser tubercle
+blob(V(0, -0.6, 0), .16, [2.1, 0.9, 1.0]);             // condyles
+blob(V(0.33, -0.55, -0.02), .075);                     // lateral epicondyle
+blob(V(-0.36, -0.55, -0.03), .09);                     // medial epicondyle
+// scapula (simplified)
+const scap = new THREE.Shape();
+scap.moveTo(0, 0); scap.lineTo(-1.25, 0.25); scap.lineTo(-1.05, -1.9); scap.quadraticCurveTo(-0.4, -0.9, 0, 0);
+const scapG = new THREE.ExtrudeGeometry(scap, { depth: .04, bevelEnabled: true, bevelSize: .04, bevelThickness: .03, bevelSegments: 3 });
+const scapM = new THREE.Mesh(scapG, boneMat);
+scapM.position.set(-0.36, 2.38, -0.42); scapM.rotation.y = -0.5; bones.add(scapM);
+blob(V(-0.34, 2.2, -0.12), .17, [0.6, 1.3, 1.1]);      // glenoid rim
+boneBetween(V(-0.5, 2.36, -0.15), V(-0.4, 2.3, 0.34), .06, .045);   // coracoid
+blob(V(-0.4, 2.28, 0.36), .065);
+blob(V(-0.05, 2.62, -0.28), .22, [1.5, .35, 1.1]);     // acromion
+boneBetween(V(-0.15, 2.62, -0.2), V(-1.5, 2.72, 0.45), .06, .07);   // clavicle
+
+// forearm (pivots at elbow)
+const forearm = new THREE.Group(); forearm.position.copy(ELBOW); rig.add(forearm);
+const faBones = new THREE.Group(); forearm.add(faBones);
+boneBetween(V(-0.13, 0.05, -0.04), V(-0.12, -2.25, 0.0), .1, .055, boneMat, faBones);   // ulna
+boneBetween(V(0.14, -0.08, 0.02), V(0.16, -2.25, 0.02), .055, .1, boneMat, faBones);    // radius
+blob(V(-0.08, 0.1, -0.2), .13, [1, 1.25, 1], faBones);    // olecranon
+blob(V(0.14, -0.1, 0.02), .1, [1, .55, 1], faBones);      // radial head
+blob(V(0.0, -2.3, 0.0), .12, [1.9, .6, 1.1], faBones);    // carpus
+
+// hand (ghost) + dumbbell
+const handMat = new THREE.MeshPhysicalMaterial({ color: '#ffd5c2', roughness: .4, transmission: .6, thickness: .5, transparent: true, opacity: .35, depthWrite: false });
+const hand = blob(V(0, -2.55, 0.02), .23, [1.0, 1.15, .82], forearm, handMat);
+
+const dumbbell = new THREE.Group(); dumbbell.position.set(0, -2.55, 0.02); forearm.add(dumbbell);
+const metal = new THREE.MeshStandardMaterial({ color: '#2a3342', metalness: .85, roughness: .28 });
+const metalHi = new THREE.MeshStandardMaterial({ color: '#9fb1c8', metalness: 1, roughness: .2 });
+const handle = new THREE.Mesh(new THREE.CylinderGeometry(.055, .055, 1.05, 24), metalHi); handle.rotation.z = Math.PI / 2; dumbbell.add(handle);
+const plates = [];
+for (const s of [-1, 1]) {
+  const p = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, .14, 48), metal); p.rotation.z = Math.PI / 2; p.position.x = s * .42; dumbbell.add(p); plates.push(p);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(1, .012, 8, 64), new THREE.MeshBasicMaterial({ color: '#2fe0c8' }));
+  ring.rotation.y = Math.PI / 2; ring.position.x = s * .5; dumbbell.add(ring); plates.push(ring);
+}
+const grabRing = new THREE.Mesh(new THREE.TorusGeometry(.62, .01, 8, 96), new THREE.MeshBasicMaterial({ color: '#2fe0c8', transparent: true, opacity: .45 }));
+grabRing.rotation.y = Math.PI / 2; dumbbell.add(grabRing);
+
+/* ════════════════════════ Muscles ════════════════════════ */
+const bicepsL = new Muscle({ key: 'biceps', color: '#e2454a', profile: fusiform({ a: .24, b: .2, belly: .2, tendonR: .034, peak: .5, bulge: .55 }), wx: 1, wz: 1.12 });
+const bicepsS = new Muscle({ key: 'biceps', color: '#d63d45', profile: fusiform({ a: .14, b: .2, belly: .19, tendonR: .04, peak: .52, bulge: .5 }), wx: 1, wz: 1.08 });
+const brach   = new Muscle({ key: 'brachialis', color: '#a8323a', profile: fusiform({ a: .03, b: .13, belly: .2, tendonR: .06, peak: .45, bulge: .25 }), wx: 1.7, wz: .72 });
+const triL    = new Muscle({ key: 'triceps', color: '#cf4a5a', profile: fusiform({ a: .07, b: .12, belly: .24, tendonR: .07, peak: .42, bulge: .35 }), wx: 1.15, wz: 1 });
+const triLat  = new Muscle({ key: 'triceps', color: '#c4404f', profile: fusiform({ a: .03, b: .12, belly: .19, tendonR: .07, peak: .45, bulge: .3 }), wx: 1.3, wz: .9 });
+const allMuscles = [bicepsL, bicepsS, brach, triL, triLat];
+const groups = { biceps: [bicepsL, bicepsS], brachialis: [brach], triceps: [triL, triLat] };
+
+// Musculocutaneous nerve
+const nerveMat = new THREE.MeshStandardMaterial({ color: '#ffd35a', emissive: '#ffb020', emissiveIntensity: .55, roughness: .4 });
+const nerve = new THREE.Mesh(new THREE.BufferGeometry(), nerveMat); rig.add(nerve);
+
+// Floor glow + particles
+const floor = new THREE.Mesh(new THREE.CircleGeometry(3.2, 64), new THREE.MeshBasicMaterial({ map: glowTexture('rgba(47,224,200,.35)', 'rgba(47,224,200,0)'), transparent: true, depthWrite: false }));
+floor.rotation.x = -Math.PI / 2; floor.position.y = -3.3; scene.add(floor);
+const scanRing = new THREE.Mesh(new THREE.RingGeometry(1.0, 1.02, 128), new THREE.MeshBasicMaterial({ color: '#2fe0c8', transparent: true, opacity: .5, side: THREE.DoubleSide }));
+scanRing.rotation.x = -Math.PI / 2; scene.add(scanRing);
+const pg = new THREE.BufferGeometry(); const pp = new Float32Array(600 * 3);
+for (let i = 0; i < 600; i++) { const r = 3 + Math.random() * 6, a = Math.random() * Math.PI * 2; pp[i * 3] = Math.cos(a) * r; pp[i * 3 + 1] = -3 + Math.random() * 7; pp[i * 3 + 2] = Math.sin(a) * r; }
+pg.setAttribute('position', new THREE.BufferAttribute(pp, 3));
+const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: '#7fe9da', size: .025, transparent: true, opacity: .55, depthWrite: false }));
+scene.add(dust);
+
+/* ════════════════════════ State ════════════════════════ */
+const MAX = THREE.MathUtils.degToRad(140);
+const S = {
+  theta: .35, target: .35, vel: 0, load: 5,
+  demo: 'curl', demoT: 0, dragging: false,
+  selected: 'biceps', focus: false, xray: false,
+  vis: { bones: true, biceps: true, brachialis: true, triceps: true, nerve: true, pins: true },
+  act: 0, triAct: 0, hover: null,
+};
+let restLen = null;
+const pts = {};
+
+function fa(x, y, z) { return forearm.localToWorld(V(x, y, z)); }
+
+function solveRig() {
+  forearm.rotation.x = -S.theta;
+  forearm.updateMatrixWorld(true);
+  const f = S.theta / MAX;
+
+  pts.supra = V(-0.3, 2.42, -0.06);
+  pts.cora  = V(-0.4, 2.27, 0.38);
+  pts.radTub = fa(0.08, -0.42, 0.09);
+  pts.ulnTub = fa(-0.06, -0.3, 0.08);
+  pts.olec  = fa(-0.03, 0.14, -0.3);
+  pts.belly = V(0.02, 1.05 + .25 * f, 0.6 + .17 * S.act + .05 * f);
+  pts.elbow = V(0.3, -0.62, 0.12);
+
+  const distal = V(0.02, -0.12 + .14 * f, 0.38 + .06 * f);
+  bicepsL.update([pts.supra, V(-0.05, 2.56, 0.02), V(0.12, 2.48, 0.22), V(0.13, 2.05, 0.34), V(0.1, 1.05 + .25 * f, 0.5 + .16 * S.act + .05 * f), distal, pts.radTub], S.act);
+  bicepsS.update([pts.cora, V(-0.32, 1.95, 0.42), V(-0.12, 1.05 + .25 * f, 0.5 + .15 * S.act + .05 * f), distal, pts.radTub], S.act);
+  brach.update([V(0, 1.0, 0.1), V(0, 0.55, 0.24 + .05 * f + .04 * S.act), V(0, -0.2, 0.3), pts.ulnTub], S.act * .8);
+
+  const w = ss(.6, 1.4, S.theta);
+  const wrap = V(0, -0.6 - .36 * Math.sin(S.theta / 2), -.36 * Math.cos(S.theta / 2));
+  const mid = V(0, -0.4, -0.32);
+  const W = mid.lerp(wrap, w);
+  const triStretch = S.triAct - .18 * f;
+  triL.update([V(-0.3, 2.0, -0.2), V(-0.22, 1.5, -0.5), V(-0.1, 0.6, -0.6 + .08 * f), V(0, -0.2, -0.42), W, pts.olec], triStretch);
+  triLat.update([V(0.16, 1.7, -0.14), V(0.24, 1.1, -0.42), V(0.12, 0.25, -0.48 + .06 * f), V(0.03, -0.25, -0.38), W.clone().add(V(0.02, 0, 0)), pts.olec], triStretch);
+
+  // nerve
+  const np = [V(-0.7, 2.2, 0.2), V(-0.38, 1.75, 0.3), V(-0.12, 0.95, 0.33), V(0.2, 0.05, 0.36), V(0.32, -0.42, 0.34), fa(0.34, -0.7, 0.22), fa(0.36, -1.4, 0.2)];
+  const ncurve = new THREE.CatmullRomCurve3(np);
+  nerve.geometry.dispose();
+  nerve.geometry = new THREE.TubeGeometry(ncurve, 90, .022, 8, false);
+  pts.nerve = ncurve.getPointAt(.32);
+
+  if (restLen === null) restLen = bicepsL.length;
+}
+
+/* ════════════════════════ Biomechanics ════════════════════════ */
+function biomech(dt) {
+  const L = S.load, th = S.theta;
+  const torque = 9.81 * (L * 0.33 + 2.2 * 0.17) * Math.sin(th);
+  const ma = 0.014 + 0.034 * Math.sin(th);
+  const force = torque / ma;
+  const v = S.vel;
+  const dyn = v > 0 ? 1 + Math.min(.5, v * .35) : 1 - Math.min(.3, -v * .2);
+  const act = Math.min(1, Math.max(.05, (force / 1250) * dyn + (L > 0 ? .05 : 0)));
+  S.act += (act - S.act) * Math.min(1, dt * 8);
+  const tri = .05 + .25 * Math.max(0, -v) * (L > 0 ? .3 : 1) + .06 * S.act;
+  S.triAct += (tri - S.triAct) * Math.min(1, dt * 8);
+  return { torque, force };
+}
+
+/* ════════════════════════ UI wiring ════════════════════════ */
+const $ = id => document.getElementById(id);
+const flexIn = $('flex'), flexOut = $('flexOut');
+const playBtn = $('playBtn'), rotBtn = $('rotBtn');
+
+function stopDemo() { S.demo = null; playBtn.classList.remove('on'); }
+function startDemo(mode) {
+  S.demo = mode; S.demoT = 0; playBtn.classList.add('on');
+}
+flexIn.addEventListener('input', () => { stopDemo(); S.target = THREE.MathUtils.degToRad(+flexIn.value); });
+playBtn.addEventListener('click', () => S.demo ? stopDemo() : startDemo('curl'));
+rotBtn.addEventListener('click', () => { controls.autoRotate = !controls.autoRotate; rotBtn.classList.toggle('on', controls.autoRotate); });
+$('load').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  [...$('load').children].forEach(x => x.classList.toggle('on', x === b));
+  S.load = +b.dataset.kg; setPlates();
+});
+function setPlates() {
+  const r = { 0: 0, 2: .24, 5: .32, 10: .42 }[S.load];
+  dumbbell.visible = S.load > 0;
+  plates.forEach(p => p.geometry.type === 'TorusGeometry' ? p.scale.setScalar(r) : p.scale.set(r, 1, r));
+}
+setPlates();
+
+$('layers').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const k = b.dataset.layer;
+  if (k === 'xray') { S.xray = !S.xray; b.classList.toggle('on', S.xray); return; }
+  S.vis[k] = !S.vis[k]; b.classList.toggle('on', S.vis[k]);
+  if (k === 'pins') $('pins').classList.toggle('hidden', !S.vis.pins);
+});
+
+$('burger').addEventListener('click', () => $('nav').classList.toggle('open'));
+
+// panel
+let tab = 'anatomy';
+function renderPanel() {
+  const m = MUSCLES[S.selected];
+  $('mName').textContent = m.name;
+  $('mLatin').textContent = m.latin;
+  $('mQuick').innerHTML = m.quick.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('');
+  [...$('mTabs').children].forEach(b => b.classList.toggle('on', b.dataset.m === S.selected));
+  [...$('iTabs').children].forEach(b => b.classList.toggle('on', b.dataset.t === tab));
+  $('focusBtn').classList.toggle('on', S.focus);
+  $('focusBtn').textContent = S.focus ? 'عرض الكل' : 'عزل العضلة';
+  $('mBody').innerHTML = `<div class="fade">` + m[tab].map(([h, p, mode, label]) =>
+    `<div class="row"><h4>${h}</h4><p>${p}</p>${mode ? `<button class="icon-btn ex" data-mode="${mode}">▶ ${label}</button>` : ''}</div>`
+  ).join('') + `</div>`;
+}
+$('mTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; S.selected = b.dataset.m; renderPanel(); });
+$('iTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tab = b.dataset.t; renderPanel(); });
+$('focusBtn').addEventListener('click', () => { S.focus = !S.focus; renderPanel(); });
+$('mBody').addEventListener('click', e => { const b = e.target.closest('[data-mode]'); if (b) startDemo(b.dataset.mode); });
+renderPanel();
+
+/* ════════════════════════ Pins ════════════════════════ */
+const PINS = [
+  { k: 'supra', n: 1, t: 'الحديبة فوق الحُقّانية', l: 'Supraglenoid tubercle', d: 'منشأ الرأس الطويل لذات الرأسين. الوتر يمر داخل مفصل الكتف، ولذلك يتأثر بإصابات الكتف مثل SLAP tear.' },
+  { k: 'cora', n: 2, t: 'النتوء الغرابي', l: 'Coracoid process', d: 'منشأ الرأس القصير لذات الرأسين والغرابية العضدية، ومُدغَم الصدرية الصغرى.' },
+  { k: 'belly', n: 3, t: 'البطن العضلي', l: 'Muscle belly', d: 'هنا تحدث معظم التمزقات العضلية. لاحظ كيف يزيد قطر البطن مع الانقباض وزيادة الحمل.' },
+  { k: 'radTub', n: 4, t: 'حدبة الكعبرة', l: 'Radial tuberosity', d: 'المُدغَم البعيد لذات الرأسين. تمزق الوتر هنا يضعف استلقاء الساعد بنحو 40%.' },
+  { k: 'olec', n: 5, t: 'الزُّج (النتوء المرفقي)', l: 'Olecranon', d: 'مُدغَم ثلاثية الرؤوس. يتحرك مع الساعد فتستطيل العضلة عند ثني المرفق.' },
+  { k: 'elbow', n: 6, t: 'مفصل المرفق', l: 'Humeroulnar joint', d: 'مفصل رزّي (Hinge) بمدى طبيعي 0–145°. الإحساس الطبيعي في نهاية الثني ليّن (Soft tissue approximation).' },
+  { k: 'nerve', n: 7, t: 'العصب العضلي الجلدي', l: 'Musculocutaneous n. (C5–C6)', d: 'يخترق الغرابية العضدية ويمر بين ذات الرأسين والعضدية، ثم يصبح العصب الجلدي الوحشي للساعد.', cls: 'nerve', layer: 'nerve' },
+];
+const pinsEl = $('pins');
+PINS.forEach(p => {
+  const el = document.createElement('div');
+  el.className = 'pin ' + (p.cls || '');
+  el.innerHTML = `<span class="dot">${p.n}</span><div class="tip"><b>${p.t}</b><i>${p.l}</i><p>${p.d}</p></div>`;
+  el.querySelector('.dot').addEventListener('click', ev => {
+    ev.stopPropagation();
+    const open = el.classList.contains('open');
+    pinsEl.querySelectorAll('.pin.open').forEach(x => x.classList.remove('open'));
+    if (!open) el.classList.add('open');
+  });
+  pinsEl.appendChild(el); p.el = el;
+});
+document.addEventListener('click', () => pinsEl.querySelectorAll('.pin.open').forEach(x => x.classList.remove('open')));
+
+/* ════════════════════════ Pointer interaction ════════════════════════ */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+const hoverTag = $('hoverTag'), dragHint = $('dragHint');
+let down = null;
+const dragTargets = [hand, handle, ...plates, grabRing];
+const LABEL = { biceps: 'ذات الرأسين', brachialis: 'العضدية', triceps: 'ثلاثية الرؤوس' };
+
+function setRay(e) {
+  const r = canvas.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+}
+function visibleMuscleMeshes() { return allMuscles.filter(m => m.mesh.visible).map(m => m.mesh); }
+
+canvas.addEventListener('pointerdown', e => {
+  setRay(e);
+  if (ray.intersectObjects(dragTargets, false).length) {
+    S.dragging = true; stopDemo(); controls.enabled = false;
+    canvas.setPointerCapture(e.pointerId); canvas.style.cursor = 'grabbing';
+    dragHint.style.opacity = 0;
+  } else down = { x: e.clientX, y: e.clientY };
+});
+canvas.addEventListener('pointermove', e => {
+  setRay(e);
+  const r = canvas.getBoundingClientRect();
+  if (S.dragging) {
+    const n = camera.getWorldDirection(V(0, 0, 0)).negate();
+    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, ELBOW);
+    const p = new THREE.Vector3();
+    if (ray.ray.intersectPlane(plane, p)) {
+      rig.worldToLocal(p);
+      const a = Math.atan2(p.z - ELBOW.z, -(p.y - ELBOW.y));
+      S.target = THREE.MathUtils.clamp(a, 0, MAX);
+    }
+    return;
+  }
+  if (e.pointerType !== 'mouse') return;
+  if (ray.intersectObjects(dragTargets, false).length) { canvas.style.cursor = 'grab'; S.hover = null; hoverTag.style.opacity = 0; return; }
+  const hit = ray.intersectObjects(visibleMuscleMeshes(), false)[0];
+  S.hover = hit ? hit.object.userData.key : null;
+  canvas.style.cursor = hit ? 'pointer' : '';
+  if (hit) {
+    hoverTag.innerHTML = `${LABEL[S.hover]} <small>· اضغط للتفاصيل</small>`;
+    hoverTag.style.transform = `translate(${e.clientX - r.left + 14}px, ${e.clientY - r.top + 14}px)`;
+    hoverTag.style.opacity = 1;
+  } else hoverTag.style.opacity = 0;
+});
+canvas.addEventListener('pointerup', e => {
+  if (S.dragging) { S.dragging = false; controls.enabled = true; canvas.style.cursor = 'grab'; return; }
+  if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 5) {
+    setRay(e);
+    const hit = ray.intersectObjects(visibleMuscleMeshes(), false)[0];
+    if (hit) { S.selected = hit.object.userData.key; S.focus = true; }
+    else S.focus = false;
+    renderPanel();
+  }
+  down = null;
+});
+canvas.addEventListener('pointerleave', () => { hoverTag.style.opacity = 0; S.hover = null; });
+window.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    e.preventDefault(); stopDemo();
+    S.target = THREE.MathUtils.clamp(S.target + (e.key === 'ArrowUp' ? 1 : -1) * THREE.MathUtils.degToRad(5), 0, MAX);
+  }
+});
+
+/* ════════════════════════ EMG ════════════════════════ */
+const emgC = $('emg'), eg = emgC.getContext('2d');
+const N_EMG = 220, emgB = new Float32Array(N_EMG), emgT = new Float32Array(N_EMG), envB = new Float32Array(N_EMG), envT = new Float32Array(N_EMG);
+let emgAcc = 0;
+function pushEmg() {
+  emgB.copyWithin(0, 1); emgT.copyWithin(0, 1); envB.copyWithin(0, 1); envT.copyWithin(0, 1);
+  const g = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+  emgB[N_EMG - 1] = g() * S.act; emgT[N_EMG - 1] = g() * S.triAct;
+  envB[N_EMG - 1] = S.act; envT[N_EMG - 1] = S.triAct;
+}
+function drawEmg() {
+  const w = emgC.clientWidth, h = emgC.clientHeight, d = Math.min(devicePixelRatio, 2);
+  if (emgC.width !== w * d) { emgC.width = w * d; emgC.height = h * d; }
+  eg.setTransform(d, 0, 0, d, 0, 0); eg.clearRect(0, 0, w, h);
+  eg.strokeStyle = 'rgba(255,255,255,.06)'; eg.lineWidth = 1;
+  for (let i = 1; i < 4; i++) { eg.beginPath(); eg.moveTo(0, h * i / 4); eg.lineTo(w, h * i / 4); eg.stroke(); }
+  const mid = h / 2, dx = w / (N_EMG - 1);
+  const raw = (buf, c) => { eg.strokeStyle = c; eg.lineWidth = 1; eg.beginPath(); for (let i = 0; i < N_EMG; i++) { const y = mid - buf[i] * mid * .95; i ? eg.lineTo(i * dx, y) : eg.moveTo(0, y); } eg.stroke(); };
+  const env = (buf, c) => { eg.strokeStyle = c; eg.lineWidth = 1.6; eg.beginPath(); for (let i = 0; i < N_EMG; i++) { const y = mid - buf[i] * mid * .9; i ? eg.lineTo(i * dx, y) : eg.moveTo(0, y); } eg.stroke(); };
+  raw(emgT, 'rgba(106,168,255,.45)'); raw(emgB, 'rgba(255,90,100,.55)');
+  env(envT, '#6aa8ff'); env(envB, '#ff5a64');
+}
+
+/* ════════════════════════ Resize ════════════════════════ */
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.fov = w < 700 ? 24 : 30;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(stage);
+resize();
+
+/* ════════════════════════ Loop ════════════════════════ */
+const clock = new THREE.Clock();
+const tmpV = new THREE.Vector3();
+let lastTheta = S.theta, uiAcc = 0, first = true;
+const phaseEl = $('phase');
+const gArc = $('gArc');
+
+function demoTarget(dt) {
+  S.demoT += dt;
+  const t = S.demoT;
+  if (S.demo === 'curl') return 1.25 - 1.15 * Math.cos(t * 1.3);
+  if (S.demo === 'iso') return Math.PI / 2;
+  if (S.demo === 'ecc') {          // 1.2s up, 3.6s slow lowering
+    const c = t % 5.2;
+    if (c < 1.2) return .1 + 2.25 * ss(0, 1.2, c);
+    if (c < 4.8) return 2.35 - 2.25 * ((c - 1.2) / 3.6);
+    return .1;
+  }
+  return S.target;
+}
+
+function tick() {
+  const dt = Math.min(clock.getDelta(), 1 / 20);
+  const time = clock.elapsedTime;
+
+  if (S.demo) S.target = demoTarget(dt);
+  const k = S.dragging ? 14 : (S.demo === 'ecc' ? 10 : 6);
+  S.theta += (S.target - S.theta) * Math.min(1, dt * k);
+  const rawVel = (S.theta - lastTheta) / Math.max(dt, 1e-3); lastTheta = S.theta;
+  S.vel += (rawVel - S.vel) * Math.min(1, dt * 10);
+
+  const { torque, force } = biomech(dt);
+  solveRig();
+
+  // visibility / focus / x-ray
+  for (const [key, list] of Object.entries(groups)) {
+    const visible = S.vis[key];
+    const dim = (S.focus && S.selected !== key) || S.xray;
+    for (const m of list) {
+      m.mesh.visible = visible;
+      const target = dim ? (S.xray ? .22 : .12) : 1;
+      m.opacity += (target - m.opacity) * Math.min(1, dt * 8);
+      m.mat.opacity = m.opacity;
+      m.mat.depthWrite = m.opacity > .9;
+      // emissive: activation glow (biceps/brachialis red, triceps blue) or hover teal
+      let ec = '#ff2a2a', ei = 0;
+      if (key === 'biceps') ei = S.act * .55 * (.85 + .15 * Math.sin(time * 18));
+      if (key === 'brachialis') ei = S.act * .4;
+      if (key === 'triceps') { ec = '#3d7dff'; ei = S.triAct * .7; }
+      if (S.hover === key) { ec = '#2fe0c8'; ei = .28; }
+      m.mat.emissive.set(ec); m.mat.emissiveIntensity = ei;
+    }
+  }
+  bones.visible = faBones.visible = S.vis.bones;
+  boneMat.emissiveIntensity = S.xray ? .35 : 0;
+  boneMat.opacity = S.xray ? .9 : 1;
+  nerve.visible = S.vis.nerve;
+  nerveMat.emissiveIntensity = .45 + .25 * Math.sin(time * 3);
+
+  grabRing.rotation.x += dt * .8;
+  grabRing.material.opacity = S.dragging ? .9 : .35 + .2 * Math.sin(time * 3);
+  scanRing.position.y = -3.25 + ((time * .55) % 1) * 6;
+  const sr = 1.1 + .25 * Math.sin(time); scanRing.scale.set(sr, sr, sr);
+  scanRing.material.opacity = .35 * (1 - ((time * .55) % 1));
+  dust.rotation.y += dt * .02;
+
+  controls.update();
+  renderer.render(scene, camera);
+
+  // pins
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for (const p of PINS) {
+    tmpV.copy(pts[p.k]); rig.localToWorld(tmpV); tmpV.project(camera);
+    const x = (tmpV.x * .5 + .5) * w, y = (-tmpV.y * .5 + .5) * h;
+    p.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    p.el.classList.toggle('flip', x < 260);
+    p.el.classList.toggle('off', tmpV.z > 1 || (p.layer && !S.vis[p.layer]));
+  }
+  // drag hint follows dumbbell
+  dumbbell.getWorldPosition(tmpV); tmpV.project(camera);
+  dragHint.style.transform = `translate(${(tmpV.x * .5 + .5) * w - 70}px, ${(-tmpV.y * .5 + .5) * h + 40}px)`;
+
+  // EMG ~45Hz
+  emgAcc += dt; while (emgAcc > 1 / 45) { pushEmg(); emgAcc -= 1 / 45; }
+  drawEmg();
+
+  // readouts ~15Hz
+  uiAcc += dt;
+  if (uiAcc > 1 / 15) {
+    uiAcc = 0;
+    const deg = Math.round(THREE.MathUtils.radToDeg(S.theta));
+    $('angle').textContent = deg;
+    gArc.setAttribute('stroke-dasharray', `${(deg / 145) * 100} 100`);
+    $('torque').innerHTML = `${torque.toFixed(1)} <small>N·m</small>`;
+    $('force').innerHTML = `${Math.round(force)} <small>N</small>`;
+    $('len').innerHTML = `${Math.round((bicepsL.length / restLen) * 100)} <small>%</small>`;
+    $('actBar').style.width = `${Math.round(S.act * 100)}%`;
+    $('actVal').textContent = `${Math.round(S.act * 100)}%`;
+    flexIn.value = deg; flexOut.textContent = deg + '°'; flexIn.style.setProperty('--p', (deg / 140 * 100) + '%');
+    const v = S.vel;
+    const [cls, txt] = v > .12 ? ['con', 'انقباض مركزي · Concentric'] : v < -.12 ? ['ecc', 'انقباض لا مركزي · Eccentric'] : ['iso', S.load > 0 && deg > 10 ? 'انقباض ثابت · Isometric' : 'راحة'];
+    phaseEl.className = 'phase ' + cls; phaseEl.textContent = txt;
+  }
+
+  if (first) { first = false; requestAnimationFrame(() => $('loader').classList.add('done')); }
+  requestAnimationFrame(tick);
+}
+solveRig();
+tick();
+</script>
+</body>
+</html>

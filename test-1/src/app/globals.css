@@ -1,0 +1,497 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #2a0f3d;
+  --ink-soft: #6b4d80;
+  --paper: #fffdf8;
+  --violet: #5b21b6;
+  --magenta: #e0287d;
+  --tangerine: #ff8a3d;
+  --sun: #ffd23f;
+  --glow: rgba(255, 61, 127, 0.45);
+}
+
+@theme inline {
+  --font-sans: var(--font-cairo);
+  --font-display: var(--font-lalezar);
+}
+
+html {
+  background: #3b0d6b;
+}
+
+body {
+  font-family: var(--font-cairo), system-ui, sans-serif;
+  color: var(--ink);
+  /* شفافة عشان الخلفية المتدرجة (z-index: -1) تبان */
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-lalezar), var(--font-cairo), sans-serif;
+  font-weight: 400;
+}
+
+/* ─────────── الخلفية ─────────── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(160deg, #3b0d6b 0%, #8e1f8f 38%, #e0287d 68%, #ff8a3d 100%);
+}
+.backdrop__blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: 0.55;
+  animation: drift 18s ease-in-out infinite alternate;
+}
+.backdrop__emoji {
+  position: absolute;
+  opacity: 0.22;
+  filter: saturate(1.2);
+  animation: bob 7s ease-in-out infinite;
+  user-select: none;
+}
+.backdrop__grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* ─────────── الكروت ─────────── */
+
+.card {
+  position: relative;
+  background: var(--paper);
+  border-radius: 32px;
+  padding: 30px 22px 26px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    0 24px 60px -12px rgba(42, 15, 61, 0.55),
+    0 0 80px -10px var(--glow);
+}
+.card--tight {
+  padding: 16px 18px;
+}
+
+/* دايرة الإيموجي بأشعة بتلف وراها */
+.emoji-badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 128px;
+  height: 128px;
+  margin-inline: auto;
+  margin-top: -84px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fff6c9, var(--sun) 55%, #ffab2e);
+  box-shadow:
+    0 0 0 6px var(--paper),
+    0 14px 30px -6px rgba(255, 138, 61, 0.7);
+}
+.emoji-badge::before {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  z-index: -1;
+  border-radius: 999px;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 210, 63, 0.55) 0 10deg, transparent 10deg 24deg);
+  mask: radial-gradient(circle, black 35%, transparent 70%);
+  animation: spin 14s linear infinite;
+}
+.emoji-badge--lg {
+  width: 150px;
+  height: 150px;
+  margin-top: -96px;
+}
+
+.title-gradient {
+  background: linear-gradient(90deg, var(--magenta), var(--tangerine));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: white;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
+/* ─────────── الأزرار ─────────── */
+
+.btn-3d {
+  --from: #34d399;
+  --to: #059669;
+  --edge: #047857;
+  position: relative;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 70px;
+  padding: 14px 18px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+  background: linear-gradient(135deg, var(--from), var(--to));
+  border-radius: 22px;
+  box-shadow:
+    0 7px 0 var(--edge),
+    0 14px 24px -6px rgba(42, 15, 61, 0.5);
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    translate 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    top 0.08s,
+    box-shadow 0.08s;
+}
+/* لمعة بتعدي على الزرار */
+.btn-3d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.35) 45%, transparent 60%);
+  translate: 120% 0;
+  animation: shine 4.5s ease-in-out infinite;
+}
+.btn-3d:active:not(:disabled) {
+  top: 5px;
+  box-shadow:
+    0 2px 0 var(--edge),
+    0 6px 12px -6px rgba(42, 15, 61, 0.5);
+}
+.btn-3d:disabled {
+  filter: saturate(0.6) brightness(0.95);
+  cursor: default;
+}
+.btn-3d__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  font-size: 1.7rem;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+}
+
+.tone-green {
+  --from: #4ade80;
+  --to: #10b981;
+  --edge: #047857;
+}
+.tone-pink {
+  --from: #ff6fa8;
+  --to: #e0287d;
+  --edge: #9d174d;
+}
+.tone-blue {
+  --from: #60a5fa;
+  --to: #6366f1;
+  --edge: #3730a3;
+}
+.tone-orange {
+  --from: #fdba3b;
+  --to: #f97316;
+  --edge: #b45309;
+}
+.tone-sun {
+  --from: #ffe066;
+  --to: #ffb020;
+  --edge: #c26a00;
+  color: var(--ink);
+  text-shadow: none;
+}
+.tone-whatsapp {
+  --from: #4ee07f;
+  --to: #1fb855;
+  --edge: #128c3e;
+}
+
+.btn-3d--center {
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: white;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: scale 0.1s;
+}
+.icon-btn:active {
+  scale: 0.92;
+}
+
+/* ─────────── مؤشر التقدم ─────────── */
+
+.progress {
+  position: relative;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.progress__fill {
+  position: relative;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sun), #ffab2e, var(--sun));
+  background-size: 200% 100%;
+  box-shadow: 0 0 16px rgba(255, 210, 63, 0.8);
+  animation: slide-bg 2s linear infinite;
+  transition: width 0.6s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.progress__rider {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: -14px;
+  translate: 0 -55%;
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+  animation: hop 0.6s ease-in-out infinite;
+}
+
+/* ─────────── عناصر تانية ─────────── */
+
+.reaction {
+  max-width: 24rem;
+  padding: 14px 24px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-align: center;
+  color: var(--ink);
+  background: white;
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 4px var(--sun),
+    0 18px 40px -8px rgba(42, 15, 61, 0.6);
+}
+
+.stamp {
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--magenta);
+  border: 3px double var(--magenta);
+  border-radius: 14px;
+  rotate: -5deg;
+  background: rgba(224, 40, 125, 0.06);
+}
+
+.ribbon {
+  display: inline-block;
+  padding: 8px 26px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--ink);
+  background: linear-gradient(90deg, var(--sun), #ffab2e);
+  border-radius: 999px;
+  box-shadow: 0 8px 20px -6px rgba(255, 171, 46, 0.8);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #eadff2;
+  transition: background 0.3s, scale 0.3s;
+}
+.dot--on {
+  background: linear-gradient(135deg, var(--magenta), var(--tangerine));
+  scale: 1.2;
+}
+
+/* ─────────── أنيميشن ─────────── */
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(4deg);
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  75% {
+    transform: rotate(4deg);
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15%,
+  45%,
+  75% {
+    transform: translateX(-10px) rotate(-1deg);
+  }
+  30%,
+  60%,
+  90% {
+    transform: translateX(10px) rotate(1deg);
+  }
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    scale: 2.5;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes pulse-soft {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+@keyframes shine {
+  0%,
+  60% {
+    translate: 120% 0;
+  }
+  100% {
+    translate: -120% 0;
+  }
+}
+@keyframes drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(40px, -60px) scale(1.2);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(8deg);
+  }
+}
+@keyframes hop {
+  0%,
+  100% {
+    translate: 0 -55%;
+  }
+  50% {
+    translate: 0 -80%;
+  }
+}
+@keyframes slide-bg {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.animate-float {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+.animate-wiggle {
+  animation: wiggle 0.4s ease-in-out 2;
+}
+.animate-shake {
+  animation:
+    pop-in 0.5s both,
+    shake 0.6s ease-in-out 0.5s 2;
+}
+.animate-bounce-in {
+  display: inline-block;
+  animation: bounce-in 0.7s ease-out 0.2s both;
+}
+.animate-stamp {
+  animation: stamp 0.35s ease-in 0.9s both;
+}
+.animate-pulse-soft {
+  animation: pulse-soft 1.6s ease-in-out infinite;
+}
+.animate-spin-slow {
+  display: inline-block;
+  animation: spin 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
