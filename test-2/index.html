@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خبر حلو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#fff1f5; --bg2:#e8f3ff; --ink:#3a2f4a; --pink:#ff8fb1; --blue:#7cc0ff;
+    --gold:#ffc857; --card:#ffffffcc;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    font-family:'Cairo',system-ui,sans-serif; color:var(--ink); min-height:100vh;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2)); overflow-x:hidden;
+    display:flex; align-items:center; justify-content:center; padding:24px 16px;
+  }
+  canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+  .screen{width:100%;max-width:460px;text-align:center;display:none;animation:fade .7s ease both}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  h1{font-size:2rem;font-weight:900;line-height:1.4;margin-bottom:8px}
+  p.sub{font-size:1.05rem;opacity:.75;margin-bottom:28px}
+
+  /* gift */
+  .gift{font-size:9rem;line-height:1;cursor:pointer;display:inline-block;
+        animation:wiggle 1.6s ease-in-out infinite;filter:drop-shadow(0 14px 18px #ff8fb155);
+        background:none;border:0;-webkit-tap-highlight-color:transparent}
+  .gift:active{transform:scale(.92)}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}15%{transform:rotate(-8deg)}30%{transform:rotate(8deg)}45%{transform:rotate(-5deg)}60%{transform:rotate(4deg)}75%{transform:rotate(0)}}
+  .hint{margin-top:18px;font-weight:600;animation:pulse 1.6s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+
+  /* suspense lines */
+  .lines p{font-size:1.5rem;font-weight:800;opacity:0;transform:translateY(10px);transition:.6s;margin:14px 0}
+  .lines p.show{opacity:1;transform:none}
+
+  /* reveal */
+  .badge{display:inline-block;background:var(--gold);padding:6px 16px;border-radius:99px;font-weight:800;margin-bottom:14px}
+  .big{font-size:2.5rem;font-weight:900;line-height:1.35;margin-bottom:10px;
+       background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .baby{font-size:5rem;animation:float 3s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-10px)}}
+  .card{background:var(--card);backdrop-filter:blur(8px);border-radius:22px;padding:18px;margin:16px 0;
+        box-shadow:0 10px 30px #3a2f4a14}
+  .card h3{font-size:1rem;opacity:.7;font-weight:600;margin-bottom:8px}
+  .count{display:flex;gap:10px;justify-content:center}
+  .count div{background:#fff;border-radius:14px;padding:10px 6px;min-width:72px;box-shadow:0 4px 12px #3a2f4a10}
+  .count b{display:block;font-size:1.8rem;font-weight:900;color:var(--pink)}
+  .count span{font-size:.8rem;opacity:.7}
+  .btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px}
+  .btn{font-family:inherit;font-weight:800;font-size:1rem;border:0;border-radius:99px;padding:12px 22px;cursor:pointer;
+       background:var(--pink);color:#fff;text-decoration:none;box-shadow:0 8px 18px #ff8fb15c}
+  .btn.alt{background:var(--blue);box-shadow:0 8px 18px #7cc0ff5c}
+  .pick{font-size:1.1rem;font-weight:800;margin-top:10px;min-height:1.6em}
+  .float{position:fixed;font-size:1.6rem;pointer-events:none;animation:up 5s linear forwards;z-index:1;opacity:.7}
+  @keyframes up{from{transform:translateY(0)}to{transform:translateY(-110vh) rotate(40deg)}}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<!-- 1) الهدية -->
+<section class="screen on" id="s1">
+  <h1>في خبر حلو جداً 🎉</h1>
+  <p class="sub">بس مش هنقوله بسهولة... لازم تفتحوا الهدية الأول</p>
+  <button class="gift" id="gift" aria-label="افتح الهدية">🎁</button>
+  <div class="hint">اضغط على الهدية 👆</div>
+</section>
+
+<!-- 2) التشويق -->
+<section class="screen" id="s2">
+  <div class="lines" id="lines">
+    <p>طب اسمعوا... 🤫</p>
+    <p>العيلة كبيرة كده وزي الفل...</p>
+    <p>بس في حد صغنن 🍼</p>
+    <p>جاي يزودها حلاوة...</p>
+  </div>
+</section>
+
+<!-- 3) الكشف -->
+<section class="screen" id="s3">
+  <div class="baby">👶</div>
+  <div class="badge">مفاجأة العيلة</div>
+  <div class="big" id="bigText">مراتي حامل!</div>
+  <p class="sub">وهتبقوا <b>عمّات وأخوال</b> قريب إن شاء الله 🤍</p>
+
+  <div class="card">
+    <h3>⏳ باقي على ميعاد الولادة المتوقع</h3>
+    <div class="count" id="count"></div>
+  </div>
+
+  <div class="card">
+    <h3>تتوقعوا ولد ولا بنت؟</h3>
+    <div class="btns">
+      <button class="btn alt" data-g="boy">ولد 💙</button>
+      <button class="btn" data-g="girl">بنت 💗</button>
+    </div>
+    <div class="pick" id="pick"></div>
+  </div>
+
+  <div class="btns">
+    <a class="btn" id="wa" target="_blank" rel="noopener">ابعتولي تهنئتكم 💌</a>
+  </div>
+</section>
+
+<script>
+/* ===== عدّل هنا ===== */
+const CONFIG = {
+  dueDate: "2027-06-15",      // ميعاد الولادة المتوقع (سنة-شهر-يوم)
+  whatsapp: "",               // رقمك بالكود الدولي من غير + مثال: 201001234567
+  message: "مبروك يا بشمهندس! 🎉"  // الرسالة اللي هتتكتب جاهزة في الواتساب
+};
+/* ==================== */
+
+const $ = id => document.getElementById(id);
+const show = id => { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); $(id).classList.add('on'); };
+
+/* confetti */
+const cv = $('confetti'), cx = cv.getContext('2d'); let parts = [];
+const fit = () => { cv.width = innerWidth; cv.height = innerHeight; }; fit(); addEventListener('resize', fit);
+function burst(n=160){
+  const cols = ['#ff8fb1','#7cc0ff','#ffc857','#a78bfa','#6ee7b7'];
+  for(let i=0;i<n;i++) parts.push({
+    x:innerWidth/2, y:innerHeight/2.2, vx:(Math.random()-.5)*16, vy:Math.random()*-15-3,
+    s:Math.random()*8+4, r:Math.random()*6, vr:(Math.random()-.5)*.4, c:cols[i%cols.length], life:220
+  });
+  if(parts.length===n) loop();
+}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{ p.vy+=.35; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; p.life--;
+    cx.save(); cx.translate(p.x,p.y); cx.rotate(p.r); cx.fillStyle=p.c; cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cx.restore(); });
+  parts = parts.filter(p=>p.life>0 && p.y<cv.height+40);
+  if(parts.length) requestAnimationFrame(loop); else cx.clearRect(0,0,cv.width,cv.height);
+}
+
+/* flow */
+$('gift').onclick = () => {
+  burst(80); show('s2');
+  const ps = [...document.querySelectorAll('#lines p')];
+  ps.forEach((p,i)=>setTimeout(()=>p.classList.add('show'), 500 + i*1300));
+  setTimeout(reveal, 500 + ps.length*1300 + 600);
+};
+function reveal(){
+  show('s3'); burst(260);
+  setInterval(()=>burst(40), 2500);
+  const em = ['🍼','👶','🧸','💗','💙','⭐','🎈'];
+  setInterval(()=>{
+    const e = document.createElement('div'); e.className='float'; e.textContent = em[Math.floor(Math.random()*em.length)];
+    e.style.left = Math.random()*95+'vw'; e.style.top = '100vh'; document.body.appendChild(e);
+    setTimeout(()=>e.remove(), 5000);
+  }, 700);
+  tick(); setInterval(tick, 1000);
+}
+
+/* countdown */
+function tick(){
+  const d = Math.max(0, new Date(CONFIG.dueDate+'T00:00:00') - new Date());
+  const v = [[Math.floor(d/864e5),'يوم'],[Math.floor(d/36e5)%24,'ساعة'],[Math.floor(d/6e4)%60,'دقيقة'],[Math.floor(d/1e3)%60,'ثانية']];
+  $('count').innerHTML = v.map(([n,l])=>`<div><b>${n}</b><span>${l}</span></div>`).join('');
+}
+
+/* guess */
+document.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{
+  $('pick').textContent = b.dataset.g==='boy' ? 'توقعك: ولد 💙 — الله أعلم!' : 'توقعك: بنت 💗 — الله أعلم!';
+  burst(60);
+});
+
+/* whatsapp */
+$('wa').href = CONFIG.whatsapp
+  ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(CONFIG.message)}`
+  : '#';
+if(!CONFIG.whatsapp) $('wa').style.display='none';
+</script>
+</body>
+</html>
