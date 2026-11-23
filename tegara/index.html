@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>خريطة طالب التجارة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* VOICE: a clear step-by-step guide that treats the student like a developer picking a stack, Egyptian Arabic
+   IDEA: an interactive flow-chart roadmap: a blue spine of yellow stages, dotted branches, a side drawer for every box
+   PICTURE: the roadmap diagram itself, with a fork where the student picks a department and the branches re-draw
+   COLOUR and TYPE: bright yellow stages, pale orange topics, dotted blue connectors, black outlines on a light page; Cairo 400 to 900
+   LAYOUT: dark top bar, white header card with tabs and progress, legend, diagram, tabs for matcher and tips */
+:root{color-scheme:light dark;--bg:light-dark(#f6f8fb,#0b1020);--card:light-dark(#fff,#141b30);--ink:light-dark(#0f172a,#e8edf8);--mut:light-dark(#5b6678,#9aa6bf);--rule:light-dark(#dfe5ee,#27324f);--tint:light-dark(#f1f5f9,#1b2540);
+--bl:light-dark(#2b78e4,#5b9bff);--y:#ffef00;--y2:#ffc800;--o:#fde08b;--pu:#7c3aed;--gr:#3f8f2a}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16.5px/1.8 "Cairo",Tahoma,sans-serif;overflow-x:clip}
+h1,h2,h3{font-weight:900;line-height:1.25;text-wrap:balance;margin:0}
+p{margin:0}button,select{font:inherit;color:inherit}button{cursor:pointer}ul{list-style:none;margin:0;padding:0}
+.w{max-width:1060px;margin-inline:auto;padding-inline:max(4vw,14px)}
+:focus-visible{outline:3px solid var(--bl);outline-offset:2px;border-radius:6px}
+html{scroll-behavior:smooth}
+
+.top{background:#0f172a;color:#cbd5e1;position:sticky;top:0;z-index:30}
+.top .w{display:flex;align-items:center;gap:22px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:900;font-size:18px;text-decoration:none;white-space:nowrap}
+.brand i{width:32px;height:32px;border-radius:8px;background:var(--y);color:#000;display:grid;place-items:center;font-style:normal;font-weight:900}
+.top .nl{display:flex;margin-inline-start:auto}
+.top .nl button{background:none;border:0;padding:14px 14px;font-weight:600;font-size:15px;color:#cbd5e1}
+.top .nl button:hover{color:#fff}
+
+.hd{margin-top:16px;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:20px 24px 0}
+.hrow{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--mut);font-weight:600;font-size:14.5px}
+.ybtn{min-height:42px;padding:2px 20px;border:0;border-radius:9px;background:var(--y2);color:#000;font-weight:800;font-size:15px}
+.ybtn:hover{background:#ffd633}
+.hd h1{font-size:clamp(34px,5.4vw,60px);margin:26px 0 6px}
+.hd .sub{color:var(--mut);font-size:18px;max-width:60ch}
+.tabrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-top:26px}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 16px;font-weight:700;color:var(--mut);white-space:nowrap}
+.tab[aria-selected=true]{color:var(--ink);border-color:var(--ink)}
+.pers{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--mut)}
+.pers select{min-height:42px;padding:2px 12px;border:1.5px solid var(--rule);border-radius:9px;background:var(--card);font-weight:700;color:var(--ink)}
+
+.prog{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;background:light-dark(#fefce8,#241f0a);border:1px solid light-dark(#fde68a,#4d4210);border-radius:12px;padding:10px 18px;font-weight:600;font-size:15px}
+.prog .bar{flex:1;min-width:160px;height:10px;border-radius:9px;background:light-dark(#fef3c7,#3a3210);overflow:hidden;border:1px solid #000}
+.prog .bar i{display:block;height:100%;width:0;background:var(--y2);transition:width .5s}
+.prog button{background:none;border:0;color:var(--mut);text-decoration:underline;font-size:14px}
+
+.lg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:22px}
+.lgb{background:var(--card);border:2px solid #000;border-radius:7px;padding:14px 18px;font-size:15px;font-weight:600}
+.lgb:not(ul){display:flex;align-items:center}.lgb li{display:flex;gap:10px;align-items:center;margin:3px 0}
+.sw{width:22px;height:14px;border:2px solid #000;border-radius:4px;flex:none}
+.bd{width:20px;height:20px;border-radius:50%;color:#fff;font-size:12px;display:inline-grid;place-items:center;font-style:normal;flex:none}
+.bd.p{background:var(--pu)}.bd.g{background:var(--gr)}
+@media(max-width:700px){.lg{grid-template-columns:minmax(0,1fr)}.top .nl{display:none}.top .w{min-height:52px}}
+
+/* diagram */
+.dg{position:relative;margin-top:10px;padding-bottom:40px}
+#ov{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+.dp{fill:none;stroke:var(--bl);stroke-width:2.6;stroke-dasharray:.1 6.5;stroke-linecap:round}
+.sp{fill:none;stroke:var(--bl);stroke-width:3.2}
+.dgin{position:relative;z-index:1}
+.lab{text-align:center;font-size:26px;font-weight:900;margin:30px auto 26px;width:max-content;background:var(--bg);padding-inline:10px;position:relative;z-index:1}
+.stg{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin:30px 0;align-items:center}
+.stg .cm{order:-1;display:grid;justify-items:center}
+.col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.dgin::before{content:"";position:absolute;inset-block:40px;inset-inline-start:50%;width:3px;background:var(--bl);opacity:.35;z-index:0}
+.node{position:relative;z-index:1;font:700 16px/1.4 "Cairo",sans-serif;color:#000;background:var(--y);border:2px solid #000;border-radius:7px;padding:9px 14px;text-align:center;min-height:46px;transition:transform .12s,box-shadow .12s,background .2s}
+.node:hover{transform:translateY(-2px);box-shadow:0 4px 0 #000}
+.node.sub{background:var(--o);font-weight:600;font-size:15.5px}
+.node.main{width:min(100%,230px);font-size:18px;font-weight:800;min-height:50px}
+.node.dn{width:100%;font-size:16.5px;font-weight:800}
+.node.dn.on{background:var(--y);box-shadow:0 0 0 3px var(--bl)}.node.dn:not(.on){background:var(--o)}
+.node.dn i.dot{display:inline-block;width:11px;height:11px;border-radius:50%;border:2px solid #000;margin-inline-end:8px;vertical-align:-1px}
+.node.st-d{background:#cdd3dc;color:#4b5563;text-decoration:line-through;text-decoration-thickness:2px}
+.node.st-l{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--bl)}
+.node .bd{position:absolute;top:50%;transform:translateY(-50%);inset-inline-start:-9px;border:2px solid var(--bg)}
+.note{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;font-size:15px;font-weight:600;line-height:1.7;grid-column:1/-1}
+.note button{display:block;width:100%;margin-top:10px;min-height:42px;border:0;border-radius:6px;background:#e2e8f0;color:#0f172a;font-weight:700}
+.note button:hover{background:#cbd5e1}
+.fork{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:46px 0 10px;position:relative;z-index:1}
+@media(min-width:900px){
+ #ov{display:block}.dgin::before{display:none}
+ .stg{grid-template-columns:minmax(0,1fr) 230px minmax(0,1fr);gap:0;margin:34px 0}
+ .stg .cm{order:0}
+ .col{grid-template-columns:minmax(0,1fr);gap:8px}
+ .cr{justify-items:start}.cl{justify-items:end}
+ .col .node,.col .note{width:min(100%,290px)}
+ .cr .node .bd{inset-inline-start:-9px}.cl .node .bd{inset-inline-start:auto;inset-inline-end:-9px}
+ .fork{grid-template-columns:repeat(4,minmax(0,1fr));margin:58px 0 54px}
+ .lab{margin:44px auto 40px}
+}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:#0f172a99;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;z-index:60;background:var(--card);color:var(--ink);display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.3,.9,.3,1);inset-block:0;inset-inline-end:0;width:min(560px,100%);transform:translateX(-105%);box-shadow:0 0 40px #0006;visibility:hidden}
+.drawer.on{transform:none;visibility:visible}
+.dh{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--rule)}
+.dh .kind{font-weight:700;font-size:13.5px;color:var(--mut);margin-inline-end:auto}
+.st{display:inline-flex;border:1.5px solid var(--rule);border-radius:9px;overflow:hidden}
+.st button{background:var(--card);border:0;padding:6px 14px;font-weight:700;font-size:14px;min-height:40px}
+.st button+button{border-inline-start:1.5px solid var(--rule)}
+.st button[aria-pressed=true].l{background:#dbeafe;color:#1e40af}.st button[aria-pressed=true].d{background:#dcfce7;color:#166534}
+.xb{width:40px;height:40px;border:1.5px solid var(--rule);border-radius:9px;background:var(--card);font-size:20px;line-height:1}
+.db{padding:22px 22px 34px;overflow:auto}
+.db h2{font-size:clamp(28px,4vw,38px);margin-bottom:10px}
+.db p.d{font-size:17px;line-height:1.9}
+.db .bx{margin-top:16px;border:1.5px solid var(--rule);border-radius:10px;padding:14px 16px;background:var(--tint)}
+.db .bx h3{font-size:16px;margin-bottom:4px}
+.db .bx ul{display:grid;gap:4px}.db .bx li::before{content:"✓ ";color:var(--gr);font-weight:900}
+.db .go{margin-top:18px;min-height:44px;padding:4px 20px;border:2px solid #000;border-radius:8px;background:var(--y);color:#000;font-weight:800}
+@media(max-width:700px){.drawer{inset-block:auto 0;inset-inline:0;width:100%;max-height:88vh;border-radius:18px 18px 0 0;transform:translateY(105%)}}
+
+/* tabs content */
+.pane{margin-top:22px}
+.mg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:820px){.mg{grid-template-columns:minmax(0,1fr)}}
+.sl{margin-bottom:22px}.sl label{display:flex;justify-content:space-between;gap:12px;font-weight:700;margin-bottom:4px}
+.sl output{font-weight:900;font-variant-numeric:tabular-nums}
+input[type=range]{appearance:none;width:100%;height:14px;border-radius:9px;border:2px solid #000;background:linear-gradient(to left,var(--y2) var(--p,0%),var(--card) var(--p,0%))}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:32px;height:32px;border-radius:7px;background:var(--y);border:2px solid #000;cursor:grab}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:7px;background:var(--y);border:2px solid #000;cursor:grab}
+.rs{background:var(--card);border:2px solid #000;border-radius:8px;padding:22px}
+.rs .tp{font-size:clamp(26px,3.6vw,38px);font-weight:900;margin:2px 0 14px;min-height:2.4em;line-height:1.3}
+.br{display:grid;grid-template-columns:6.8em minmax(0,1fr) 3.2em;gap:12px;align-items:center;padding:6px 8px;border-radius:7px;font-weight:700}
+.br.hi{background:#fef9c3;color:#000}
+.br .t{height:14px;border:2px solid #000;border-radius:5px;background:var(--card);overflow:hidden}.br .t i{display:block;height:100%;width:0;background:var(--o);transition:width .5s}
+.br.hi .t i{background:var(--y2)}.br b{text-align:left;font-variant-numeric:tabular-nums}
+.rs .node{margin-top:16px;width:100%}
+.tg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media(max-width:700px){.tg{grid-template-columns:minmax(0,1fr)}}
+.tip{background:var(--card);border:2px solid #000;border-radius:8px;overflow:hidden}
+.tip h3{background:var(--y);color:#000;padding:10px 16px;font-size:18px;border-bottom:2px solid #000}
+.tip p{padding:14px 16px;font-weight:500}
+.more{margin-top:22px;padding:16px 18px;background:var(--card);border:1px solid var(--rule);border-radius:10px}
+.more h3{font-size:17px;margin-bottom:10px}.more ul{display:flex;flex-wrap:wrap;gap:8px}.more li{background:var(--o);color:#000;border:2px solid #000;border-radius:6px;padding:2px 12px;font-weight:600;font-size:14.5px}
+.foot{margin:40px 0 30px;color:var(--mut);font-size:14px;text-align:center}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style></head>
+<body>
+<div class="top"><div class="w">
+  <a class="brand" href="#map"><i>ت</i>خريطة التجارة</a>
+  <div class="nl"><button data-tab="map">الخريطة</button><button data-tab="match">اختار قسمك</button><button data-tab="tips">نصايح</button></div>
+</div></div>
+
+<main class="w">
+<header class="hd">
+  <div class="hrow"><span>خريطة طالب التجارة في مصر</span><button class="ybtn" id="copy">انسخ الرابط</button></div>
+  <h1>طالب كلية التجارة</h1>
+  <p class="sub">دليل خطوة بخطوة من أول سنة لحد أول شغلانة. اختار قسمك، دوس على أي مربع واقرا عنه، وتابع تقدمك.</p>
+  <div class="tabrow">
+    <div class="tabs" role="tablist" id="tabs">
+      <button class="tab" role="tab" data-tab="map" aria-selected="true">الخريطة</button>
+      <button class="tab" role="tab" data-tab="match" aria-selected="false">مين الأقرب ليك؟</button>
+      <button class="tab" role="tab" data-tab="tips" aria-selected="false">نصايح</button>
+    </div>
+    <label class="pers">قسمي <select id="deptSel"></select></label>
+  </div>
+</header>
+<div class="prog" id="prog"></div>
+
+<section id="p-map" class="pane" role="tabpanel">
+  <div class="lg">
+    <ul class="lgb"><li><i class="sw" style="background:var(--y)"></i>محطة رئيسية في الرحلة</li><li><i class="sw" style="background:var(--o)"></i>مادة أو مهارة أو وظيفة</li><li><i class="bd p">✓</i>أنصحك تبدأ بيه</li><li><i class="bd g">✓</i>اختياري أو بديل</li></ul>
+    <div class="lgb">دوس على أي مربع في الخريطة وهتفتحلك لوحة فيها الشرح. علّم على اللي بتذاكره واللي خلصته وتقدمك بيتحفظ.</div>
+  </div>
+  <div class="dg" id="dg"><svg id="ov" aria-hidden="true"></svg><div class="dgin" id="dgin"></div></div>
+</section>
+
+<section id="p-match" class="pane" role="tabpanel" hidden>
+  <div class="mg">
+    <div id="sliders"></div>
+    <div class="rs" aria-live="polite"><div style="color:var(--mut);font-weight:700;font-size:14px">الأقرب ليك</div><div class="tp" id="rtop"></div><div id="rbars"></div><button class="node" id="rgo" hidden></button></div>
+  </div>
+</section>
+
+<section id="p-tips" class="pane" role="tabpanel" hidden>
+  <div class="tg">
+    <div class="tip"><h3>Excel من أول يوم</h3><p>مطلوب في كل قسم وبيفرق معاك في أي مقابلة شغل. اتعلم الجداول والمعادلات والرسوم البيانية بدري.</p></div>
+    <div class="tip"><h3>إنجليزي كل يوم</h3><p>أغلب الشهادات المهنية والوظايف الكويسة بتتطلب إنجليزي قوي، فخلّيه عادة يومية.</p></div>
+    <div class="tip"><h3>تدريب صيفي من سنة تانية</h3><p>البنوك والشركات الكبيرة بتفتح التقديم بدري. قدّم من بدري وابني خبرة قبل التخرج.</p></div>
+    <div class="tip"><h3>شهادة قبل ما تتخرج</h3><p>تقدر تبدأ شهادة مهنية وانت لسه طالب وتسبق زمايلك في سوق الشغل.</p></div>
+  </div>
+  <div class="more"><h3>برامج تانية ممكن تلاقيها في كليتك</h3><ul><li>نظم معلومات الأعمال BIS</li><li>التكنولوجيا المالية FinTech</li><li>التجارة الإلكترونية</li><li>شعبة اللغة الإنجليزية</li><li>شعبة اللغة الفرنسية</li><li>نظام الساعات المعتمدة</li></ul></div>
+</section>
+<p class="foot">المواد والأقسام المعروضة نموذج عام لكليات التجارة، وبتختلف حسب لائحة كل جامعة. راجع لائحة كليتك.</p>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-labelledby="dt">
+  <div class="dh"><span class="kind" id="dk"></span><div class="st" id="dst"><button class="l" data-s="l" aria-pressed="false">بذاكرها</button><button class="d" data-s="d" aria-pressed="false">خلصتها</button></div><button class="xb" id="dx" aria-label="إغلاق">×</button></div>
+  <div class="db" id="db"></div>
+</aside>
+
+<script>
+{
+const D=[
+{id:'accounting',name:'محاسبة',tag:'لغة الأرقام في أي شركة: بتسجل وتراجع وتحلل فلوس الشركة وتطلع قوايمها المالية.',w:[1,.15,.4,.3,.1],
+ y3:['محاسبة متوسطة','محاسبة التكاليف','المراجعة','المحاسبة الحكومية','نظم المعلومات المحاسبية','المحاسبة الضريبية'],
+ y4:['محاسبة الشركات المتقدمة','المراجعة المتقدمة','المحاسبة الإدارية','تحليل القوائم المالية','معايير المحاسبة المصرية والدولية','مشروع التخرج'],
+ skills:['قراءة وإعداد القوايم المالية','Excel متقدم','برامج ERP زي SAP و Odoo','حساب الضرايب والتكاليف'],
+ jobs:['محاسب في شركة','مراجع حسابات','محاسب ضرايب','محلل مالي','مراجع داخلي في بنك'],
+ certs:['CMA','CPA','ACCA','CIA','IFRS'],
+ m3:['ابدأ التحضير لشهادة CMA أو ACCA','اتدرب على برنامج محاسبي'],m4:['اعمل مشروع التخرج على قوايم مالية حقيقية','قدّم على مكاتب المراجعة']},
+{id:'business',name:'إدارة أعمال',tag:'إزاي تدير شركة: ناس وتسويق ومبيعات وعمليات واستراتيجية.',w:[.2,1,.1,.3,1],
+ y3:['التسويق','إدارة الموارد البشرية','إدارة الإنتاج والعمليات','السلوك التنظيمي','الإدارة المالية','بحوث التسويق'],
+ y4:['الإدارة الاستراتيجية','إدارة الأعمال الدولية','ريادة الأعمال','إدارة سلاسل الإمداد','نظم المعلومات الإدارية','مشروع التخرج'],
+ skills:['التواصل والعرض قدام الناس','إدارة المشروعات','التسويق الرقمي','القيادة والعمل في فريق'],
+ jobs:['تسويق رقمي','موارد بشرية HR','مبيعات وتطوير أعمال','سلاسل إمداد','رائد أعمال'],
+ certs:['PMP','PHRi','Google Marketing','HubSpot','CSCP'],
+ m3:['اعمل حملة تسويق تجريبية لمشروع صغير','انضم لمبادرة أو نشاط طلابي'],m4:['ابدأ كورس إدارة مشروعات أو تسويق رقمي','اعمل بورتفوليو لأعمالك']},
+{id:'economics',name:'اقتصاد',tag:'الصورة الكبيرة: إزاي الدولة والبنوك والأسواق بتشتغل وليه الأسعار بتتحرك.',w:[.3,.2,.5,1,.2],
+ y3:['الاقتصاد الجزئي المتوسط','الاقتصاد الكلي المتوسط','النقود والبنوك','المالية العامة','الاقتصاد الدولي','تاريخ الفكر الاقتصادي'],
+ y4:['الاقتصاد القياسي','التنمية الاقتصادية','الأسواق المالية','الاقتصاد المصري','السياسات الاقتصادية','بحث التخرج'],
+ skills:['تحليل البيانات الاقتصادية','كتابة التقارير والأبحاث','EViews و Stata و Python','قراءة المؤشرات والأسواق'],
+ jobs:['محلل اقتصادي','باحث في بنك','الوزارات والهيئات الحكومية','محلل استثمار','المنظمات الدولية'],
+ certs:['CFA','ماجستير اقتصاد','Python و R','FRM'],
+ m3:['اتعلم Python أو EViews','اكتب تحليل لخبر اقتصادي كل أسبوع'],m4:['ابدأ أساسيات CFA أو جهّز للماجستير','اعمل بحث التخرج على بيانات حقيقية']},
+{id:'statistics',name:'إحصاء وتأمين',tag:'الأرقام والاحتمالات: بتقيس المخاطر وتحلل البيانات وتسعّر التأمين.',w:[.6,0,1,.5,0],
+ y3:['الإحصاء الرياضي','رياضيات التأمين','تأمين الحياة','تحليل الانحدار','نظرية العينات','تأمين الممتلكات'],
+ y4:['الرياضيات الاكتوارية','التأمينات الاجتماعية','إعادة التأمين','السلاسل الزمنية','بحوث العمليات','مشروع التخرج'],
+ skills:['SQL و Python و Excel','بناء نماذج إحصائية','تسعير المخاطر','Power BI والتقارير'],
+ jobs:['خبير اكتواري','شركات التأمين','محلل بيانات','إدارة المخاطر في البنوك','أبحاث السوق'],
+ certs:['امتحانات SOA','شهادات تحليل البيانات','FRM','دبلومات التأمين'],
+ m3:['اتعلم SQL و Python','حل مسائل احتمالات كل أسبوع'],m4:['اعمل مشروع تحليل بيانات وارفعه أونلاين','جرّب أول امتحان اكتواري أو شهادة بيانات']}
+];
+const Y1=['مبادئ المحاسبة المالية','مبادئ الاقتصاد الجزئي','مبادئ إدارة الأعمال','رياضيات الأعمال','مدخل القانون','لغة إنجليزية','الحاسب الآلي'];
+const Y2=['محاسبة مالية متوسطة','الاقتصاد الكلي','مبادئ الإحصاء','الرياضة المالية','مبادئ التسويق','القانون التجاري','مبادئ التأمين','إنجليزي تجاري'];
+const L1=[['Excel الأساسي','p'],['إنجليزي يومي','p'],['مهارات العرض والتقديم','g']],L2=[['تدريب صيفي أول','p'],['نشاط طلابي','g']];
+const I={
+'مبادئ المحاسبة المالية':['بتتعلم إزاي الشركة بتسجل عملياتها في دفاتر وإزاي تطلع منها قوايم مالية بسيطة.','أساس كل الأقسام، لأن أي قرار في الشغل بيعتمد على أرقام.'],
+'مبادئ الاقتصاد الجزئي':['بتفهم إزاي المستهلك والشركة بياخدوا قراراتهم وإزاي الأسعار بتتحدد بالعرض والطلب.','التسعير والتسويق وتحليل الأسواق.'],
+'مبادئ إدارة الأعمال':['مدخل لوظايف الإدارة الأربعة: التخطيط والتنظيم والقيادة والرقابة.','أي وظيفة فيها فريق أو مشروع.'],
+'رياضيات الأعمال':['معادلات وفوايد ودوال بتتطبق على مشاكل الأعمال زي الربح والتكلفة.','المالية والإحصاء والاقتصاد القياسي.'],
+'مدخل القانون':['فكرة عامة عن النظام القانوني والعقود والحقوق والالتزامات.','فهم العقود والقانون التجاري بعد كده.'],
+'لغة إنجليزية':['إنجليزي بمصطلحات تجارية في القراية والكتابة والمحادثة.','الشهادات المهنية والشركات الكبيرة.'],
+'الحاسب الآلي':['أساسيات الكمبيوتر وبرامج الأوفيس وعلى رأسها Excel.','كل وظيفة تقريبًا.'],
+'محاسبة مالية متوسطة':['تفاصيل أعمق في الأصول والخصوم وحقوق الملكية وإعداد القوايم المالية.','المحاسبة والمراجعة والتحليل المالي.'],
+'الاقتصاد الكلي':['الصورة الكبيرة للاقتصاد: الناتج والتضخم والبطالة وسياسات الدولة والبنك المركزي.','فهم أخبار الاقتصاد وقرارات الاستثمار.'],
+'مبادئ الإحصاء':['جمع البيانات ووصفها واستخلاص نتايج منها بمقاييس زي المتوسط والانحراف.','بحوث التسويق وتحليل البيانات.'],
+'الرياضة المالية':['حساب الفايدة والقروض والأقساط والاستثمار عبر الزمن.','البنوك والتمويل والتأمين.'],
+'مبادئ التسويق':['إزاي تفهم العميل وتقدم له المنتج الصح بالسعر والمكان والترويج المناسب.','المبيعات والبراند والتسويق الرقمي.'],
+'القانون التجاري':['قواعد التجارة والشركات والأوراق التجارية والإفلاس.','الإدارة والمحاسبة والعقود.'],
+'مبادئ التأمين':['فكرة التأمين وأنواعه وإزاي بيوزع المخاطر بين الناس.','قسم الإحصاء والتأمين وإدارة المخاطر.'],
+'إنجليزي تجاري':['مراسلات ومصطلحات ومحادثات الشغل بالإنجليزي.','الإيميلات والعروض والمقابلات.'],
+'Excel الأساسي':['الجداول والمعادلات والرسوم البيانية، وأهم أداة في أي وظيفة تجارية.','كل الأقسام بلا استثناء.'],
+'إنجليزي يومي':['اقرا وشوف وسمّع بالإنجليزي كل يوم عشان تبقى جاهز للشهادات والشغل.','الشهادات المهنية والمقابلات.'],
+'مهارات العرض والتقديم':['إزاي تقدم فكرة بشكل واضح بسلايدات وكلام قدام الناس.','الشغل في فريق والعروض والمقابلات.'],
+'تدريب صيفي أول':['قدّم على تدريب صيفي في بنك أو شركة. بيعرّفك على الشغل الحقيقي وبيساعدك تختار قسمك.','السيرة الذاتية وفرص التعيين.'],
+'نشاط طلابي':['انضم لفريق أو مبادرة داخل الكلية لتبني مهارات التواصل والقيادة.','الشغل الجماعي والثقة قدام الناس.'],
+'محاسبة متوسطة':['قياس الأصول والالتزامات والإيرادات بشكل متقدم حسب المعايير.','إعداد القوايم المالية.'],
+'محاسبة التكاليف':['حساب تكلفة المنتج أو الخدمة وتحليل عناصرها لتسعير أحسن وتقليل المصاريف.','الشركات الصناعية والإدارة المالية.'],
+'المراجعة':['فحص دفاتر الشركة والتأكد إن قوايمها المالية سليمة وأمينة.','مكاتب المراجعة والبنوك.'],
+'المحاسبة الحكومية':['إزاي بتتسجل ميزانية الدولة والجهات الحكومية وإيراداتها ومصروفاتها.','الوظايف الحكومية.'],
+'نظم المعلومات المحاسبية':['استخدام البرامج والنظم في تسجيل وتحليل البيانات المحاسبية.','برامج ERP وأي شركة كبيرة.'],
+'المحاسبة الضريبية':['حساب الضرايب على الأفراد والشركات وإعداد الإقرارات.','محاسب الضرايب ومكاتب الاستشارات.'],
+'محاسبة الشركات المتقدمة':['قضايا زي الاندماج والشركات القابضة وتجميع القوايم.','الشركات الكبيرة والمراجعة.'],
+'المراجعة المتقدمة':['إجراءات المراجعة على أساس المخاطر والعينات وكتابة تقرير المراجع.','مكاتب المراجعة الدولية.'],
+'المحاسبة الإدارية':['استخدام الأرقام في القرارات الداخلية: الموازنات وقياس الأداء.','الإدارة المالية.'],
+'تحليل القوائم المالية':['قراية القوايم بالنسب والمؤشرات للحكم على صحة الشركة.','الاستثمار والبنوك.'],
+'معايير المحاسبة المصرية والدولية':['القواعد المنظمة لإعداد القوايم المالية، المصرية ومعايير IFRS الدولية.','كل الشركات.'],
+'مشروع التخرج':['مشروع بحثي أو عملي بتطبق فيه اللي اتعلمته على حالة حقيقية.','السيرة الذاتية والمقابلات.'],
+'التسويق':['دراسة السوق والعملاء وبناء الخطط والحملات.','التسويق الرقمي والمبيعات.'],
+'إدارة الموارد البشرية':['التوظيف والتدريب والتقييم والأجور وتطوير الموظفين.','قسم الموارد البشرية HR.'],
+'إدارة الإنتاج والعمليات':['تنظيم عمليات الإنتاج والجودة وتقليل الهدر وتحسين الكفاءة.','المصانع وسلاسل الإمداد.'],
+'السلوك التنظيمي':['إزاي الناس بتتصرف جوه المؤسسة: الدافعية والقيادة والتعاون.','إدارة الفرق.'],
+'الإدارة المالية':['قرارات التمويل والاستثمار وتقييم المشروعات ومخاطرها.','أي منصب إداري.'],
+'بحوث التسويق':['جمع وتحليل بيانات العملاء بالاستبيانات والمقابلات.','قرارات التسويق.'],
+'الإدارة الاستراتيجية':['تحديد اتجاه الشركة على المدى الطويل وتحليل المنافسين والفرص.','المناصب القيادية.'],
+'إدارة الأعمال الدولية':['الشغل عبر الحدود: التصدير والاستيراد والثقافات والتجارة العالمية.','الشركات متعددة الجنسيات.'],
+'ريادة الأعمال':['إزاي تبدأ مشروعك: فكرة وخطة وتمويل وتشغيل.','المشاريع الخاصة.'],
+'إدارة سلاسل الإمداد':['تنسيق الشراء والتخزين والنقل لحد ما المنتج يوصل للعميل.','اللوجستيات والتجارة الإلكترونية.'],
+'نظم المعلومات الإدارية':['استخدام التكنولوجيا والبيانات في دعم قرارات الإدارة.','التحول الرقمي.'],
+'الاقتصاد الجزئي المتوسط':['نظريات أعمق عن سلوك المستهلك والمنتج والأسواق والمنافسة.','التحليل الاقتصادي للشركات.'],
+'الاقتصاد الكلي المتوسط':['نماذج لتحديد الدخل القومي والتضخم والبطالة.','تحليل السياسات الاقتصادية.'],
+'النقود والبنوك':['وظيفة النقود وإزاي البنوك والبنك المركزي بيأثروا في الاقتصاد وأسعار الفايدة.','القطاع المصرفي.'],
+'المالية العامة':['إيرادات الدولة ومصروفاتها والضرايب والدين العام.','الوظايف الحكومية والبحثية.'],
+'الاقتصاد الدولي':['التجارة بين الدول وأسعار الصرف وميزان المدفوعات.','الشركات الدولية والتصدير.'],
+'تاريخ الفكر الاقتصادي':['تطور الأفكار الاقتصادية من الكلاسيكيين لحد النظريات الحديثة.','فهم أصل النظريات.'],
+'الاقتصاد القياسي':['استخدام الإحصاء والبرامج لاختبار العلاقات الاقتصادية وتوقع المستقبل.','التحليل والأبحاث.'],
+'التنمية الاقتصادية':['إزاي الدول بتنمو وتقلل الفقر وتحسن مستوى المعيشة.','المنظمات الدولية.'],
+'الأسواق المالية':['البورصة والسندات والأوراق المالية وإزاي بتتداول.','الاستثمار.'],
+'الاقتصاد المصري':['هيكل الاقتصاد المصري وقطاعاته وتحدياته وسياساته.','الوظايف الحكومية والبحثية.'],
+'السياسات الاقتصادية':['أدوات الدولة المالية والنقدية وتأثيرها.','التحليل والبحث.'],
+'بحث التخرج':['بحث علمي على موضوع اقتصادي باستخدام بيانات حقيقية.','الدراسات العليا.'],
+'الإحصاء الرياضي':['الأساس النظري للإحصاء: الاحتمالات والتوزيعات والتقدير واختبار الفروض.','كل مواد القسم بعد كده.'],
+'رياضيات التأمين':['حساب الأقساط والاحتياطيات باستخدام الاحتمالات والفايدة.','شركات التأمين.'],
+'تأمين الحياة':['أنواع تأمينات الحياة وتسعيرها.','التأمين والمعاشات.'],
+'تحليل الانحدار':['نماذج بتربط متغيرات ببعض وبتتنبأ بقيمة من أخرى.','تحليل البيانات.'],
+'نظرية العينات':['إزاي تختار عينة صغيرة تمثل مجتمع كبير بدقة.','أبحاث السوق.'],
+'تأمين الممتلكات':['تأمين السيارات والحريق والبضائع وتسعيره وتقدير الخسائر.','شركات التأمين.'],
+'الرياضيات الاكتوارية':['حساب المخاطر المالية المستقبلية بنماذج رياضية للتأمين والمعاشات.','المسار الاكتواري.'],
+'التأمينات الاجتماعية':['نظم المعاشات والتأمين الصحي والبطالة.','الجهات الحكومية.'],
+'إعادة التأمين':['إزاي شركات التأمين بتوزع مخاطرها على شركات أكبر.','الشركات الدولية.'],
+'السلاسل الزمنية':['تحليل بيانات متتابعة عبر الزمن وتوقعها.','التوقعات والتحليل.'],
+'بحوث العمليات':['استخدام النماذج الرياضية لاتخاذ أفضل قرار، زي البرمجة الخطية.','اللوجستيات والتخطيط.'],
+'محاسب في شركة':['بتسجل المعاملات وتراجع الحسابات وتطلع التقارير الشهرية.'],'مراجع حسابات':['بتفحص حسابات العملاء وتكتب رأي مستقل عن سلامتها.'],'محاسب ضرايب':['بتجهز الإقرارات وتحسب الضرايب وتمثل الشركة قدام مصلحة الضرايب.'],'محلل مالي':['بتحلل الأرقام وتعمل توقعات تساعد الإدارة تقرر.'],'مراجع داخلي في بنك':['بتتأكد إن إجراءات البنك سليمة وملتزمة بالقواعد.'],
+'تسويق رقمي':['بتدير إعلانات ومحتوى وحسابات السوشيال لجذب العملاء.'],'موارد بشرية HR':['بتوظف وتدرب وتتابع شؤون الموظفين.'],'مبيعات وتطوير أعمال':['بتدور على عملاء جدد وتقفل صفقات وتبني علاقات.'],'سلاسل إمداد':['بتنسق الشراء والتخزين والشحن.'],'رائد أعمال':['بتبدأ مشروعك وتقوده بنفسك.'],
+'محلل اقتصادي':['بتحلل مؤشرات السوق وتكتب تقارير وتوقعات.'],'باحث في بنك':['بتعمل دراسات عن الاقتصاد والأسواق لدعم قرارات البنك.'],'الوزارات والهيئات الحكومية':['بتشارك في إعداد السياسات والدراسات الحكومية.'],'محلل استثمار':['بتقيّم الأسهم والشركات وبتدي توصيات استثمار.'],'المنظمات الدولية':['بتشتغل في مشاريع التنمية والأبحاث مع منظمات دولية.'],
+'خبير اكتواري':['بتقدّر المخاطر والأقساط والالتزامات المستقبلية لشركات التأمين.'],'شركات التأمين':['بتشتغل في الاكتتاب وتسعير الوثائق وتقدير التعويضات.'],'محلل بيانات':['بتنضف وتحلل البيانات وتعمل داشبورد وتقارير.'],'إدارة المخاطر في البنوك':['بتقيس مخاطر الائتمان والسوق وتحد منها.'],'أبحاث السوق':['بتصمم استبيانات وتحلل نتايجها.'],
+'CMA':['شهادة محاسب إداري معتمد، بتركز على التخطيط وتحليل التكاليف واتخاذ القرار.'],'CPA':['محاسب قانوني أمريكي، معترف بيها دوليًا في المحاسبة والمراجعة.'],'ACCA':['شهادة بريطانية في المحاسبة والمالية معترف بيها عالميًا.'],'CIA':['مراجع داخلي معتمد، للمراجعة الداخلية والرقابة.'],'IFRS':['معايير التقارير المالية الدولية المستخدمة في معظم دول العالم.'],
+'PMP':['شهادة إدارة المشروعات من معهد PMI.'],'PHRi':['شهادة دولية في الموارد البشرية.'],'Google Marketing':['شهادات من جوجل في التسويق الرقمي والإعلانات.'],'HubSpot':['كورسات وشهادات في التسويق والمبيعات.'],'CSCP':['شهادة محترف سلاسل إمداد معتمد.'],
+'CFA':['محلل مالي معتمد، من أشهر الشهادات في الاستثمار.'],'ماجستير اقتصاد':['دراسات عليا للبحث أو العمل الأكاديمي.'],'Python و R':['لغات برمجة لتحليل البيانات وبناء النماذج.'],'FRM':['مدير مخاطر مالية معتمد.'],
+'امتحانات SOA':['امتحانات جمعية الاكتواريين الأمريكية، وهي الطريق للمسار الاكتواري.'],'شهادات تحليل البيانات':['كورسات وشهادات في SQL وPower BI وPython.'],'دبلومات التأمين':['دبلومات متخصصة من معاهد التأمين.']
+};
+const GEN=['خطوة عملية مقترحة السنة دي. ابدأ بجزء صغير وكمّل عليه بانتظام.','بتفرق في سيرتك الذاتية وفي أي مقابلة شغل.'];
+const SLD=['بحب الأرقام والحسابات','بحب الناس والتواصل','الرياضيات والمعادلات مش بتخوفني','بحب أقرا وأحلل الأخبار والأسواق','بحب أقود وأبدأ مشاريع'];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const dget=id=>D.find(d=>d.id===id);
+let S={dept:'accounting',st:{}};
+try{const j=JSON.parse(localStorage.getItem('tm-rm')||'null');if(j){if(dget(j.dept))S.dept=j.dept;if(j.st&&typeof j.st==='object')S.st=j.st}}catch(e){}
+const save=()=>{try{localStorage.setItem('tm-rm',JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const cur=()=>dget(S.dept);
+
+/* node factory: n=[name,tag,key,kind,cls] */
+const node=(name,key,kind,o={})=>`<button class="node ${o.main?'main':o.dn?'dn':'sub'} ${S.st[key]?'st-'+S.st[key]:''}" data-k="${esc(key)}" data-n="${esc(name)}" data-kind="${kind}" ${o.m!==undefined?`data-m="${o.m}"`:''} ${o.id?`id="${o.id}"`:''} data-side="${o.side||''}" data-stg="${o.stg??''}">${esc(name)}${o.tag?`<i class="bd ${o.tag}">✓</i>`:''}</button>`;
+const sub=(arr,dept,kind,stg,side)=>arr.map(n=>node(n,dept+'|'+n,kind,{stg,side})).join('');
+const tagged=(arr,dept,kind,stg,side)=>arr.map(([n,t])=>node(n,dept+'|'+n,kind,{tag:t,stg,side})).join('');
+
+function build(){
+ const d=cur(),id=d.id;
+ const html=`<div class="lab" id="lab">كلية التجارة</div>
+ <div class="stg"><div class="col cr">${sub(Y1,'c','مادة',0,'r')}</div><div class="cm">${node('السنة الأولى','m0','مرحلة',{main:1,id:'m0',m:0})}</div><div class="col cl">${tagged(L1,'c','مهارة',0,'l')}</div></div>
+ <div class="stg"><div class="col cr">${sub(Y2,'c','مادة',1,'r')}</div><div class="cm">${node('السنة التانية','m1','مرحلة',{main:1,id:'m1',m:1})}</div><div class="col cl">${tagged(L2,'c','خطوة',1,'l')}<div class="note">في الوقت ده المفروض تعرف أنهي مادة بتحبها أكتر.<button data-tab="match">ساعدني أختار قسمي</button></div></div></div>
+ <div class="stg" style="margin-bottom:0"><div class="col cr"></div><div class="cm">${node('اختار قسمك','m2',' مرحلة',{main:1,id:'m2',m:2})}</div><div class="col cl"></div></div>
+ <div class="fork" id="fork">${D.map(x=>`<button class="node dn ${x.id===id?'on':''}" id="dn-${x.id}" data-dept="${x.id}">${x.id===id?'✓ ':''}${x.name}</button>`).join('')}</div>
+ <div class="stg"><div class="col cr">${sub(d.y3,id,'مادة',3,'r')}</div><div class="cm">${node('السنة التالتة','m3','مرحلة',{main:1,id:'m3',m:3})}</div><div class="col cl">${tagged(d.m3.map((m,i)=>[m,i?'g':'p']),id,'خطوة',3,'l')}</div></div>
+ <div class="stg"><div class="col cr">${sub(d.y4,id,'مادة',4,'r')}</div><div class="cm">${node('السنة الرابعة','m4','مرحلة',{main:1,id:'m4',m:4})}</div><div class="col cl">${tagged(d.m4.map((m,i)=>[m,i?'g':'p']),id,'خطوة',4,'l')}</div></div>
+ <div class="stg"><div class="col cr">${sub(d.jobs,id,'وظيفة',5,'r')}</div><div class="cm">${node('التخرج','m5','مرحلة',{main:1,id:'m5',m:5})}</div><div class="col cl">${tagged(d.certs.map((c,i)=>[c,i<2?'p':'g']),id,'شهادة',5,'l')}</div></div>`;
+ $('#dgin').innerHTML=html;
+ requestAnimationFrame(draw);
+}
+
+/* connectors */
+function draw(){
+ const ov=$('#ov');if(getComputedStyle(ov).display==='none')return;
+ const dg=$('#dg'),R=dg.getBoundingClientRect();ov.setAttribute('viewBox',`0 0 ${R.width} ${R.height}`);
+ const g=e=>{const r=e.getBoundingClientRect();return{l:r.left-R.left,r:r.right-R.left,t:r.top-R.top,b:r.bottom-R.top,cx:(r.left+r.right)/2-R.left,cy:(r.top+r.bottom)/2-R.top}};
+ const vert=(a,b)=>{const m=(a.b+b.t)/2;return `M${a.cx} ${a.b}C${a.cx} ${m} ${b.cx} ${m} ${b.cx} ${b.t}`};
+ const sel=g($('#dn-'+S.dept)),L=g($('#lab')),M=[0,1,2,3,4,5].map(i=>g($('#m'+i)));
+ let s=`<path class="sp" d="${vert(L,M[0])}"/><path class="sp" d="${vert(M[0],M[1])}"/><path class="sp" d="${vert(M[1],M[2])}"/>`;
+ D.forEach(x=>{s+=`<path class="dp" d="${vert(M[2],g($('#dn-'+x.id)))}"/>`});
+ s+=`<path class="sp" d="${vert(sel,M[3])}"/><path class="sp" d="${vert(M[3],M[4])}"/><path class="sp" d="${vert(M[4],M[5])}"/>`;
+ $$('.node.sub[data-side]').forEach(n=>{
+  const st=n.dataset.stg;if(st===''||!n.dataset.side)return;const m=M[+st],a=g(n),right=a.cx>m.cx;
+  const x1=right?m.r:m.l,x2=right?a.l:a.r,mx=(x1+x2)/2;
+  s+=`<path class="dp" d="M${x1} ${m.cy}C${mx} ${m.cy} ${mx} ${a.cy} ${x2} ${a.cy}"/>`;
+ });
+ ov.innerHTML=s;
+}
+new ResizeObserver(()=>draw()).observe($('#dg'));
+if(document.fonts)document.fonts.ready.then(draw);
+
+/* progress */
+function trackKeys(){const d=cur(),k=[];Y1.concat(Y2).forEach(n=>k.push('c|'+n));L1.concat(L2).forEach(([n])=>k.push('c|'+n));d.y3.concat(d.y4,d.m3,d.m4).forEach(n=>k.push(d.id+'|'+n));return k}
+function paintProg(){
+ const k=trackKeys(),done=k.filter(x=>S.st[x]==='d').length,p=Math.round(done/k.length*100);
+ $('#prog').innerHTML=`<span>تقدمك: خلصت ${done} من ${k.length}</span><span class="bar"><i style="width:${p}%"></i></span><b>${p}%</b><button id="rst">ابدأ من جديد</button>`;
+}
+function refresh(){
+ $$('.node[data-k]').forEach(n=>{const s=S.st[n.dataset.k];n.classList.toggle('st-d',s==='d');n.classList.toggle('st-l',s==='l')});
+ paintProg();
+}
+
+/* drawer */
+let dk=null,lastFocus=null;
+const MAIN=[
+ ['السنة الأولى','سنة التعرف. بتدرس أساسيات المحاسبة والاقتصاد والإدارة والرياضيات مع كل الأقسام.','ركّز على الفهم مش الحفظ، وابدأ Excel والإنجليزي من أول يوم.'],
+ ['السنة التانية','بتتعمق في المواد الأساسية وبتبدأ تعرف أنهي فرع بيشدك أكتر.','دي أنسب سنة تقدّم فيها على أول تدريب صيفي وتفكر في قسمك.'],
+ ['اختار قسمك','نقطة القرار. من سنة تالتة بتتخصص في قسم من الأربعة. التوزيع غالبًا حسب رغبتك وتقديرك في أول سنتين، وبيختلف من جامعة لجامعة.','محتار؟ جرّب تاب «مين الأقرب ليك؟» وحرّك السلايدرز.']
+];
+function openDrawer(btn){
+ const name=btn.dataset.n,key=btn.dataset.k,kind=btn.dataset.kind.trim(),d=cur();
+ dk=key;lastFocus=btn;let desc,why,extra='';
+ if(btn.dataset.m!==undefined){const m=+btn.dataset.m;
+  if(m<3){[,desc,why]=MAIN[m]}
+  else if(m===3){desc=d.tag;why='مواد القسم الأساسية هتلاقيها على يمين المربع، وخطوات عملية تنفذها على الشمال.'}
+  else if(m===4){desc='تخصص أعمق في '+d.name+' ومشروع التخرج اللي بتطبق فيه اللي اتعلمته.';why='ابدأ التجهيز لشهادتك المهنية والتقديم للتدريب.'}
+  else{desc='بتتخرج بمؤهل بكالوريوس التجارة شعبة '+d.name+' وبتبدأ الشغل أو الدراسات العليا.';why='الوظايف على اليمين والشهادات اللي تكمّل بيها على الشمال.';extra=`<div class="bx"><h3>هتتخرج بالمهارات دي</h3><ul>${d.skills.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`}
+ }else{const a=I[name]||GEN;desc=a[0];why=a[1]}
+ const track=!(kind==='وظيفة'||kind==='شهادة'||btn.dataset.m!==undefined);
+ $('#dk').textContent=kind;
+ $('#dst').style.display=track?'':'none';
+ $('#db').innerHTML=`<h2 id="dt">${esc(name)}</h2><p class="d">${esc(desc)}</p>${why?`<div class="bx"><h3>${kind==='وظيفة'||kind==='شهادة'?'':'بتفيدك في'}</h3><p>${esc(why)}</p></div>`.replace('<h3></h3>',''):''}${extra}`;
+ paintSt();$('#drawer').classList.add('on');$('#scrim').classList.add('on');$('#drawer').setAttribute('aria-hidden','false');$('#dx').focus();
+}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#scrim').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true');if(lastFocus)lastFocus.focus()}
+function paintSt(){$$('#dst button').forEach(b=>b.setAttribute('aria-pressed',S.st[dk]===b.dataset.s))}
+
+document.addEventListener('click',e=>{
+ const dn=e.target.closest('[data-dept]');if(dn){setDept(dn.dataset.dept);return}
+ const nb=e.target.closest('.node[data-k]');if(nb){openDrawer(nb);return}
+ const tb=e.target.closest('[data-tab]');if(tb){tab(tb.dataset.tab);return}
+ const sb=e.target.closest('#dst button');if(sb){const v=sb.dataset.s;if(S.st[dk]===v)delete S.st[dk];else S.st[dk]=v;save();refresh();paintSt();return}
+ if(e.target.closest('#dx')||e.target.id==='scrim'){closeDrawer();return}
+ if(e.target.id==='rst'){if(confirm&&false){}S.st={};save();refresh();return}
+ if(e.target.id==='copy'){const b=e.target;let ok=false;try{navigator.clipboard.writeText(location.href).then(()=>{b.textContent='اتنسخ'}).catch(()=>{b.textContent='انسخه من شريط العنوان'});ok=true}catch(x){}if(!ok)b.textContent='انسخه من شريط العنوان';setTimeout(()=>b.textContent='انسخ الرابط',2200)}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#drawer').classList.contains('on'))closeDrawer()});
+
+function setDept(id){
+ S.dept=id;save();$('#deptSel').value=id;build();refresh();
+}
+$('#deptSel').innerHTML=D.map(d=>`<option value="${d.id}">${d.name}</option>`).join('');
+$('#deptSel').value=S.dept;
+$('#deptSel').addEventListener('change',e=>setDept(e.target.value));
+
+/* tabs */
+function tab(t){
+ closeDrawer&&$('#drawer').classList.contains('on')&&closeDrawer();
+ ['map','match','tips'].forEach(x=>{$('#p-'+x).hidden=x!==t});
+ $$('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+ try{history.replaceState(null,'','#'+t)}catch(e){}
+ if(t==='map')requestAnimationFrame(draw);
+ window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+}
+
+/* matcher */
+const V=[0,0,0,0,0];
+$('#sliders').innerHTML=SLD.map((s,i)=>`<div class="sl"><label for="s${i}">${s}<output id="o${i}">0</output></label><input id="s${i}" type="range" min="0" max="10" step="1" value="0" data-s="${i}"></div>`).join('');
+$('#rbars').innerHTML=D.map(d=>`<div class="br" id="b-${d.id}"><span>${d.name}</span><span class="t"><i></i></span><b>0%</b></div>`).join('');
+function paintMatch(){
+ const sc=D.map(d=>Math.round(d.w.reduce((a,w,i)=>a+w*V[i],0)/(d.w.reduce((a,b)=>a+b,0)*10)*100));
+ const any=V.some(v=>v>0),bi=sc.indexOf(Math.max(...sc));
+ D.forEach((d,i)=>{const r=$('#b-'+d.id);r.querySelector('i').style.width=sc[i]+'%';r.querySelector('b').textContent=sc[i]+'%';r.classList.toggle('hi',any&&i===bi)});
+ $('#rtop').textContent=any?D[bi].name:'حرّك أي سلايدر للبداية';
+ const g=$('#rgo');g.hidden=!any;if(any){g.textContent='اعرض خريطة '+D[bi].name;g.dataset.pick=D[bi].id}
+}
+$('#sliders').addEventListener('input',e=>{const r=e.target.closest('[data-s]');if(!r)return;const i=+r.dataset.s;V[i]=+r.value;r.style.setProperty('--p',r.value*10+'%');$('#o'+i).textContent=r.value;paintMatch()});
+$('#rgo').addEventListener('click',e=>{setDept(e.currentTarget.dataset.pick);tab('map')});
+paintMatch();
+
+build();refresh();
+const h=location.hash.slice(1);if(['match','tips'].includes(h))tab(h);
+}
+</script>
+</body>
+</html>
